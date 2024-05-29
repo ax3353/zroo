@@ -1,0 +1,668 @@
+我正在设计一个规则表达式类lisp语言风格的规则引擎，现有架构如下：
+
+4个核心类：
+public interface Function<T, R> {
+
+    /**
+     * 函数执行的具体方法
+     */
+    R execute(Evaluator evaluator, List<T> args);
+
+    /**
+     * 函数指定的名字
+     */
+    String name();
+
+    /**
+     * 是否需要 Evaluator 预先评估所有参数
+     */
+    default boolean evalArgsFirst() {
+        return true;
+    }
+}
+
+public class FunctionFactory {
+    private static final Map<String, Function<?, ?>> FUNCTION_MAP = new HashMap<>();
+
+    public static void register(Function<?, ?> function) {
+        FUNCTION_MAP.put(function.name(), function);
+    }
+
+    public static <T, R> Function<T, R> getFunction(String name) {
+        Function<?, ?> function = FUNCTION_MAP.get(name);
+        if (function == null) {
+            throw new IllegalArgumentException("No function registered with name: " + name);
+        }
+
+        try {
+            return (Function<T, R>) function;
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Function type mismatch for: " + name, e);
+        }
+    }
+
+    // 注册默认操作
+    static {
+        register(new EqualsFunction());
+        register(new AddFunction());
+        register(new SubtractFunction());
+        register(new MultiplyFunction());
+        register(new DivideFunction());
+        register(new GreaterThanFunction());
+        register(new GreaterThanOrEqualFunction());
+        register(new LessThanFunction());
+        register(new LessThanOrEqualFunction());
+        register(new AndFunction());
+        register(new OrFunction());
+        register(new NotFunction());
+        register(new ToStrFunction());
+        register(new ToIntFunction());
+        register(new IfFunction());
+        register(new GetValueFunction());
+        register(new PrintFunction());
+    }
+}
+
+public class Evaluator {
+
+    private final Map<String, Object> context;
+
+    public Evaluator(Map<String, Object> context) {
+        this.context = context;
+    }
+
+    public Object eval(List<Object> rules) {
+        String funcName = (String) rules.get(0);
+        Function<Object, Object> function = FunctionFactory.getFunction(funcName);
+        if (function == null) {
+            throw new IllegalArgumentException("No function registered for: " + funcName);
+        }
+
+        List<Object> arguments = new ArrayList<>();
+        if (function.evalArgsFirst()) {
+            for (int i = 1; i < rules.size(); i++) {
+                Object arg = rules.get(i);
+                if (arg instanceof List) {
+                    arguments.add(this.eval((List<Object>) arg));
+                } else {
+                    arguments.add(arg);
+                }
+            }
+            return function.execute(this, arguments);
+        } else {
+            // evalArgsFirst 如果返回 false，则参数会作为原始表达式传递给函数，由函数自己决定何时评估这些参数
+            return function.execute(this, rules.subList(1, rules.size()));
+        }
+    }
+
+    public Map<String, Object> getContext() {
+        return this.context;
+    }
+}
+
+public class RuleParser<R> {
+    private final List<Object> rules;
+    private final Map<String, Object> context;
+
+    public RuleParser(List<Object> rules, Map<String, Object> context) {
+        this.rules = rules;
+        this.context = context;
+    }
+
+    public RuleParser(String jsonRule, Map<String, Object> context) {
+        this.rules = JSON.parseObject(jsonRule, List.class);
+        this.validate(this.rules);
+        this.context = context;
+    }
+
+    public R eval() {
+        Evaluator evaluator = new Evaluator(context);
+        return (R) evaluator.eval(this.rules);
+    }
+
+    private void validate(List<?> rules) {
+        if (rules == null || rules.size() < 2) {
+            throw new RuntimeException("Must have at least one argument.");
+        }
+    }
+}
+
+public final class RuleEngine<T, R> {
+
+    public R exec(T t, String ruleExpression) {
+        Map<String, Object> context = ObjectToMapUtils.flatMap(t);
+        RuleParser<Number> parser = new RuleParser<>(ruleExpression, context);
+        return (R) parser.eval();
+    }
+
+    public R exec(T t, List<Object> rules) {
+        Map<String, Object> context = ObjectToMapUtils.flatMap(t);
+        String ruleExpression = JSON.toJSONString(rules);
+        RuleParser<Number> parser = new RuleParser<>(ruleExpression, context);
+        return (R) parser.eval();
+    }
+}
+
+以下为实现Function接口的函数
+public class AddFunction implements Function<Number, Number> {
+
+    @Override
+    public Number execute(Evaluator evaluator, List<Number> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("AddFunction requires at least one argument.");
+        }
+
+        double sum = 0;
+        boolean allIntegers = true;
+
+        for (Number arg : args) {
+            if (!(arg instanceof Integer)) {
+                allIntegers = false;
+            }
+            sum += arg.doubleValue();
+        }
+
+        if (allIntegers) {
+            return (int) sum;
+        } else {
+            return sum;
+        }
+    }
+
+    @Override
+    public String name() {
+        return "+";
+    }
+}
+
+public class AndFunction implements Function<Boolean, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Boolean> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("AndOperation requires at least one argument.");
+        }
+
+        for (Object arg : args) {
+            Boolean result;
+            if (arg instanceof List) {
+                // 如果arg是List类型，假设它是一个需要求值的表达式
+                result = (Boolean) evaluator.eval((List<Object>) arg);
+            } else if (arg instanceof Boolean) {
+                // 如果arg已经是Boolean类型，直接使用该值
+                result = (Boolean) arg;
+            } else {
+                // 如果arg既不是List也不是Boolean，抛出异常
+                throw new IllegalArgumentException("Argument must be a Boolean or a Boolean expression.");
+            }
+
+            if (!result) {
+                // 短路：一旦发现为假则立即返回 false
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String name() {
+        return "&&";
+    }
+
+    @Override
+    public boolean evalArgsFirst() {
+        // 不预先评估所有参数
+        return false;
+    }
+}
+
+public class DivideFunction implements Function<Number, Number> {
+
+    @Override
+    public Number execute(Evaluator evaluator, List<Number> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("DivideFunction requires at least one argument.");
+        }
+
+        double quotient = args.get(0).doubleValue();
+        boolean allIntegers = args.get(0) instanceof Integer;
+
+        for (int i = 1; i < args.size(); i++) {
+            Number arg = args.get(i);
+            if (!(arg instanceof Integer)) {
+                allIntegers = false;
+            }
+            if (arg.doubleValue() == 0) {
+                throw new ArithmeticException("Division by zero.");
+            }
+            quotient /= arg.doubleValue();
+        }
+
+        if (allIntegers && quotient == Math.floor(quotient)) {
+            return (int) quotient;
+        } else {
+            return quotient;
+        }
+    }
+
+    @Override
+    public String name() {
+        return "/";
+    }
+}
+
+public class EqualsFunction implements Function<Object, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Object> args) {
+        if (args.size() != 2) {
+            throw new IllegalArgumentException("EqualsOperation requires exactly 2 arguments.");
+        }
+        return args.get(0).equals(args.get(1));
+    }
+
+    @Override
+    public String name() {
+        return "eq";
+    }
+}
+
+public class GetValueFunction implements Function<String, Object> {
+
+    @Override
+    public Object execute(Evaluator evaluator, List<String> args) {
+        if (args.size() != 1 || args.get(0) == null) {
+            throw new IllegalArgumentException("GetValueFunction requires exactly one string argument.");
+        }
+
+        String key = args.get(0);
+        Map<String, Object> context = evaluator.getContext();
+        if (!context.containsKey(key)) {
+            throw new IllegalArgumentException("Key '" + key + "' not found in context.");
+        }
+        return context.get(key);
+    }
+
+    @Override
+    public String name() {
+        return "@value";
+    }
+
+    @Override
+    public boolean evalArgsFirst() {
+        return true;
+    }
+}
+
+public class GreaterThanFunction implements Function<Number, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Number> args) {
+        if (args.size() != 2 || args.get(0) == null || args.get(1) == null) {
+            throw new IllegalArgumentException("GreaterThanFunction requires exactly two arguments.");
+        }
+
+        Comparable first = toComparable(evaluator, args.get(0));
+        Comparable second = toComparable(evaluator, args.get(1));
+        return first.compareTo(second) > 0;
+    }
+
+    @Override
+    public String name() {
+        return ">";
+    }
+
+    private Comparable<?> toComparable(Evaluator evaluator, Object arg) {
+        if (arg instanceof List) {
+            return (Comparable<?>) evaluator.eval((List<Object>) arg);
+        } else {
+            return (Comparable<?>) arg;
+        }
+    }
+}
+
+public class GreaterThanOrEqualFunction implements Function<Number, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Number> args) {
+        if (args.size() != 2) {
+            throw new IllegalArgumentException("GreaterThanOrEqualFunction requires exactly two arguments.");
+        }
+
+        Comparable first = toComparable(evaluator, args.get(0));
+        Comparable second = toComparable(evaluator, args.get(1));
+        return first.compareTo(second) >= 0;
+    }
+
+    @Override
+    public String name() {
+        return ">=";
+    }
+
+    private Comparable<?> toComparable(Evaluator evaluator, Object arg) {
+        if (arg instanceof List) {
+            return (Comparable<?>) evaluator.eval((List<Object>) arg);
+        } else {
+            return (Comparable<?>) arg;
+        }
+    }
+}
+
+public class IfFunction implements Function<Object, Object> {
+
+    @Override
+    public Object execute(Evaluator evaluator, List<Object> args) {
+        if (args.size() < 2) {
+            throw new IllegalArgumentException("IfFunction requires at least two arguments: condition and trueBranch.");
+        }
+
+        for (int i = 0; i < args.size() - 1; i += 2) {
+            Object condition = args.get(i);
+            Object conditionResult;
+            if (condition instanceof List) {
+                conditionResult = evaluator.eval((List<Object>) condition);
+            } else {
+                conditionResult = condition;
+            }
+
+            if (!(conditionResult instanceof Boolean)) {
+                throw new IllegalArgumentException("Condition expression must evaluate to a Boolean.");
+            }
+
+            if ((Boolean) conditionResult) {
+                Object trueBranch = args.get(i + 1);
+                if (trueBranch instanceof List) {
+                    return evaluator.eval((List<Object>) trueBranch);
+                } else {
+                    return trueBranch;
+                }
+            }
+        }
+
+        // 处理最后一个else
+        if (args.size() % 2 != 0) {
+            Object elseBranch = args.get(args.size() - 1);
+            if (elseBranch instanceof List) {
+                return evaluator.eval((List<Object>) elseBranch);
+            } else {
+                return elseBranch;
+            }
+        }
+
+        // 所有条件都为假，没有else分支
+        return null;
+    }
+
+    @Override
+    public String name() {
+        return "if";
+    }
+
+    @Override
+    public boolean evalArgsFirst() {
+        return false;
+    }
+}
+
+public class LessThanFunction implements Function<Number, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Number> args) {
+        if (args.size() != 2) {
+            throw new IllegalArgumentException("LessThanFunction requires exactly two arguments.");
+        }
+
+        Comparable first = toComparable(evaluator, args.get(0));
+        Comparable second = toComparable(evaluator, args.get(1));
+        return first.compareTo(second) < 0;
+    }
+
+    @Override
+    public String name() {
+        return "<";
+    }
+
+    /**
+     * Helper method to convert an argument to a Comparable type.
+     * It evaluates the argument if it is a List, otherwise it uses the argument as is.
+     */
+    private Comparable<?> toComparable(Evaluator evaluator, Object arg) {
+        if (arg instanceof List) {
+            return (Comparable<?>) evaluator.eval((List<Object>) arg);
+        } else {
+            return (Comparable<?>) arg;
+        }
+    }
+}
+
+public class LessThanOrEqualFunction implements Function<Number, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Number> args) {
+        if (args.size() != 2) {
+            throw new IllegalArgumentException("LessThanOrEqualFunction requires exactly two arguments.");
+        }
+
+        Comparable first = toComparable(evaluator, args.get(0));
+        Comparable second = toComparable(evaluator, args.get(1));
+        return first.compareTo(second) <= 0;
+    }
+
+    @Override
+    public String name() {
+        return "<=";
+    }
+
+    /**
+     * Helper method to convert an argument to a Comparable type.
+     * It evaluates the argument if it is a List, otherwise it uses the argument as is.
+     */
+    private Comparable<?> toComparable(Evaluator evaluator, Object arg) {
+        if (arg instanceof List) {
+            return (Comparable<?>) evaluator.eval((List<Object>) arg);
+        } else {
+            return (Comparable<?>) arg;
+        }
+    }
+}
+
+public class MultiplyFunction implements Function<Number, Number> {
+
+    @Override
+    public Number execute(Evaluator evaluator, List<Number> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("MultiplyFunction requires at least one argument.");
+        }
+
+        double product = 1.0;
+        boolean allIntegers = true;
+
+        for (Number arg : args) {
+            if (!(arg instanceof Integer)) {
+                allIntegers = false;
+            }
+            product *= arg.doubleValue();
+        }
+
+        if (allIntegers) {
+            return (int) product;
+        } else {
+            return product;
+        }
+    }
+
+    @Override
+    public String name() {
+        return "*";
+    }
+}
+
+public class NotFunction implements Function<Object, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Object> args) {
+        if (args.size() != 1 || args.get(0) == null) {
+            throw new IllegalArgumentException("NotFunction requires exactly one argument.");
+        }
+
+        Object arg = args.get(0);
+        if (arg instanceof List) {
+            Object result = evaluator.eval((List<Object>) arg);
+            if (result instanceof Boolean) {
+                return !(Boolean) result;
+            } else {
+                throw new IllegalArgumentException("Argument must evaluate to a Boolean value.");
+            }
+        } else if (arg != null) {
+            return !(Boolean) arg;
+        } else {
+            throw new IllegalArgumentException("Argument must be a Boolean value or an expression list.");
+        }
+    }
+
+    @Override
+    public String name() {
+        return "!";
+    }
+}
+
+public class OrFunction implements Function<Boolean, Boolean> {
+
+    @Override
+    public Boolean execute(Evaluator evaluator, List<Boolean> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("OrOperation requires at least one argument.");
+        }
+
+        for (Object arg : args) {
+            Boolean result;
+            if (arg instanceof List) {
+                // 如果arg是List类型，假设它是一个需要求值的表达式
+                result = (Boolean) evaluator.eval((List<Object>) arg);
+            } else if (arg instanceof Boolean) {
+                // 如果arg已经是Boolean类型，直接使用该值
+                result = (Boolean) arg;
+            } else {
+                // 如果arg既不是List也不是Boolean，抛出异常
+                throw new IllegalArgumentException("Argument must be a Boolean or a Boolean expression.");
+            }
+
+            if (result) {
+                // 短路逻辑：一旦发现真值，立即返回 true
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String name() {
+        return "||";
+    }
+
+    @Override
+    public boolean evalArgsFirst() {
+        // 不预先评估所有参数
+        return false;
+    }
+}
+
+public class SubtractFunction implements Function<Number, Number> {
+
+    @Override
+    public Number execute(Evaluator evaluator, List<Number> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("SubtractFunction requires at least one argument.");
+        }
+
+        double result = args.get(0).doubleValue();
+        boolean allIntegers = args.get(0) instanceof Integer;
+
+        for (int i = 1; i < args.size(); i++) {
+            Number arg = args.get(i);
+            if (!(arg instanceof Integer)) {
+                allIntegers = false;
+            }
+            result -= arg.doubleValue();
+        }
+
+        if (allIntegers) {
+            return (int) result;
+        } else {
+            return result;
+        }
+    }
+
+    @Override
+    public String name() {
+        return "-";
+    }
+}
+
+public class ToIntFunction implements Function<String, Integer> {
+
+    @Override
+    public Integer execute(Evaluator evaluator, List<String> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("IntegerOperation requires at least one argument.");
+        }
+
+        return Integer.parseInt(String.valueOf(args.get(0)));
+    }
+
+    @Override
+    public String name() {
+        return "toInt";
+    }
+}
+
+public class ToStrFunction implements Function<Object, String> {
+
+    @Override
+    public String execute(Evaluator evaluator, List<Object> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("StringOperation requires at least one argument.");
+        }
+
+        return String.valueOf(args.get(0));
+    }
+
+    @Override
+    public String name() {
+        return "toStr";
+    }
+}
+
+public class StrInputFunction implements Function<String, String> {
+
+    @Override
+    public String execute(Evaluator evaluator, List<String> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("StrInputFunction requires at least one argument.");
+        }
+        return args.get(0);
+    }
+
+    @Override
+    public String name() {
+        return "strInput";
+    }
+}
+
+public class IntInputFunction implements Function<Integer, Integer> {
+
+    @Override
+    public Integer execute(Evaluator evaluator, List<Integer> args) {
+        if (args.isEmpty()) {
+            throw new IllegalArgumentException("IntInputFunction requires at least one argument.");
+        }
+        return args.get(0);
+    }
+
+    @Override
+    public String name() {
+        return "intInput";
+    }
+}
+
+以上就是现有的架构设计，你仔细研究现有架构设计，辅助我演进出更优秀的设计出来
