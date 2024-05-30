@@ -35,6 +35,7 @@ public class JsonToExpressionTest {
     private static Object handleConditional(JSONObject jsonObject) {
         JSONArray branches = jsonObject.getJSONArray("branches");
         Object result = null;
+        // 逆序遍历
         for (int i = branches.size() - 1; i >= 0; i--) {
             JSONObject branch = branches.getJSONObject(i);
             JSONObject condition = branch.getJSONObject("condition");
