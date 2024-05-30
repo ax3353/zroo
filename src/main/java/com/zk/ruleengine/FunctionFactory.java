@@ -30,29 +30,31 @@ public class FunctionFactory {
 
     // 注册默认操作
     static {
-        register(new EqualsFunction());
-        register(new AddFunction());
-        register(new SubtractFunction());
-        register(new MultiplyFunction());
-        register(new DivideFunction());
-        register(new GreaterThanFunction());
-        register(new GreaterThanOrEqualFunction());
-        register(new LessThanFunction());
-        register(new LessThanOrEqualFunction());
-        register(new AndFunction());
-        register(new OrFunction());
-        register(new NotFunction());
-        register(new ToStrFunction());
-        register(new ToIntFunction());
-        register(new IfFunction());
-        register(new GetValueFunction());
-        register(new StrInputFunction());
+        register(new Equals());
+        register(new NumberEquals());
+        register(new Add());
+        register(new Subtract());
+        register(new Multiply());
+        register(new Divide());
+        register(new GreaterThan());
+        register(new GreaterThanOrEqual());
+        register(new LessThan());
+        register(new LessThanOrEqual());
+        register(new And());
+        register(new Or());
+        register(new Not());
+        register(new ToStr());
+        register(new ToInt());
+        register(new If());
+        register(new GetValue());
+        register(new StrInput());
         register(new NumberInput());
-        register(new DateGreaterThanFunction());
-        register(new DateGreaterThanOrEqualFunction());
-        register(new DateLessThanFunction());
-        register(new DateLessThanOrEqualFunction());
-        register(new ToDateFunction());
-        register(new PrintFunction());
+        register(new DateGreaterThan());
+        register(new DateGreaterThanOrEqual());
+        register(new DateLessThan());
+        register(new DateLessThanOrEqual());
+        register(new DateBetweenFunction());
+        register(new ToDate());
+        register(new Print());
     }
 }

@@ -11,20 +11,20 @@ import java.util.List;
 /**
  * @author zk
  */
-public class DateLessThanFunction implements Function<String, Boolean> {
+public class DateGreaterThanOrEqual implements Function<String, Boolean> {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public Boolean execute(Evaluator evaluator, List<String> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("DateLessThanFunction requires exactly two arguments.");
+            throw new IllegalArgumentException("DateGreaterThanOrEqualFunction requires exactly two arguments.");
         }
         try {
             Date date1 = DATE_FORMAT.parse(args.get(0));
             Date date2 = DATE_FORMAT.parse(args.get(1));
-            // date1 < date2
-            return date1.before(date2);
+            // date1 >= date2
+            return !date1.before(date2);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format. Please use yyyy-MM-dd format.", e);
         }
@@ -32,6 +32,6 @@ public class DateLessThanFunction implements Function<String, Boolean> {
 
     @Override
     public String name() {
-        return "date<";
+        return "date>=";
     }
 }

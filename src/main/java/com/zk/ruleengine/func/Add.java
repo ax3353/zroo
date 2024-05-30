@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author zk
  */
-public class AddFunction implements Function<Number, Number> {
+public class Add implements Function<Number, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Number> args) {

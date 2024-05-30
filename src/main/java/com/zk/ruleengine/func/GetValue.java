@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @author zk
  */
-public class GetValueFunction implements Function<String, Object> {
+public class GetValue implements Function<String, Object> {
 
     @Override
     public Object execute(Evaluator evaluator, List<String> args) {

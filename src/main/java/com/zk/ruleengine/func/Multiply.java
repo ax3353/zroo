@@ -8,34 +8,33 @@ import java.util.List;
 /**
  * @author zk
  */
-public class SubtractFunction implements Function<Number, Number> {
+public class Multiply implements Function<Number, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Number> args) {
         if (args.isEmpty()) {
-            throw new IllegalArgumentException("SubtractFunction requires at least one argument.");
+            throw new IllegalArgumentException("MultiplyFunction requires at least one argument.");
         }
 
-        double result = args.get(0).doubleValue();
-        boolean allIntegers = args.get(0) instanceof Integer;
+        double product = 1.0;
+        boolean allIntegers = true;
 
-        for (int i = 1; i < args.size(); i++) {
-            Number arg = args.get(i);
+        for (Number arg : args) {
             if (!(arg instanceof Integer)) {
                 allIntegers = false;
             }
-            result -= arg.doubleValue();
+            product *= arg.doubleValue();
         }
 
         if (allIntegers) {
-            return (int) result;
+            return (int) product;
         } else {
-            return result;
+            return product;
         }
     }
 
     @Override
     public String name() {
-        return "-";
+        return "*";
     }
 }

@@ -1,0 +1,238 @@
+普通的json串示例：
+{
+	"type": "||",
+	"left": {
+		"type": "&&",
+		"left": {
+			"type": "eq",
+			"left": {
+				"type": "@value",
+				"value": "deviceName"
+			},
+			"right": {
+				"type": "strInput",
+				"value": "河庄门店"
+			}
+		},
+		"right": {
+			"type": "&&",
+			"left": {
+				"type": ">=",
+				"left": {
+					"type": "*",
+					"left": {
+						"type": "@value",
+						"value": "pressure"
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 5
+					}
+				},
+				"right": {
+					"type": "numberInput",
+					"value": 30
+				}
+			},
+			"right": {
+				"type": "<=",
+				"left": {
+					"type": "*",
+					"left": {
+						"type": "@value",
+						"value": "pressure"
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 5
+					}
+				},
+				"right": {
+					"type": "numberInput",
+					"value": 50
+				}
+			}
+		}
+	},
+	"right": {
+		"type": "==",
+		"left": {
+			"type": "dateBetween",
+			"left": {
+				"type": "@value",
+				"value": "alarmTime"
+			},
+			"right": {
+				"type": "@value",
+				"value": "createTime"
+			}
+		},
+		"right": {
+			"type": "numberInput",
+			"value": 2.0
+		}
+	}
+}
+
+----------------------------------------------------------------------------------------------
+if-elseif-else示例：
+{
+	"type": "conditional",
+	"branches": [{
+		"condition": {
+			"type": "&&",
+			"left": {
+				"type": "eq",
+				"left": {
+					"type": "@value",
+					"value": "deviceName"
+				},
+				"right": {
+					"type": "strInput",
+					"value": "河庄门店"
+				}
+			},
+			"right": {
+				"type": "&&",
+				"left": {
+					"type": ">=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 30
+					}
+				},
+				"right": {
+					"type": "<=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 50
+					}
+				}
+			}
+		},
+		"branch": {
+			"type": "print",
+			"value": "执行操作A"
+		}
+	}, {
+		"condition": {
+			"type": "==",
+			"left": {
+				"type": "dateBetween",
+				"left": {
+					"type": "@value",
+					"value": "alarmTime"
+				},
+				"right": {
+					"type": "@value",
+					"value": "createTime"
+				}
+			},
+			"right": {
+				"type": "numberInput",
+				"value": 2.0
+			}
+		},
+		"branch": {
+			"type": "print",
+			"value": "执行操作B"
+		}
+	}, {
+		"branch": {
+			"type": "print",
+			"value": "没有满足任何条件时执行操作C"
+		}
+	}]
+}
+
+----------------------------------------------------------------------------------------------
+if-else示例：
+{
+	"type": "conditional",
+	"branches": [{
+		"condition": {
+			"type": "&&",
+			"left": {
+				"type": "eq",
+				"left": {
+					"type": "@value",
+					"value": "deviceName"
+				},
+				"right": {
+					"type": "strInput",
+					"value": "河庄门店"
+				}
+			},
+			"right": {
+				"type": "&&",
+				"left": {
+					"type": ">=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 30
+					}
+				},
+				"right": {
+					"type": "<=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 50
+					}
+				}
+			}
+		},
+		"branch": {
+			"type": "print",
+			"value": "执行操作A"
+		}
+	}, {
+		"branch": {
+			"type": "print",
+			"value": "没有满足任何条件时执行操作B"
+		}
+	}]
+}

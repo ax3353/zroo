@@ -8,12 +8,12 @@ import java.util.List;
 /**
  * @author zk
  */
-public class AndFunction implements Function<Boolean, Boolean> {
+public class Or implements Function<Boolean, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Boolean> args) {
         if (args.isEmpty()) {
-            throw new IllegalArgumentException("AndOperation requires at least one argument.");
+            throw new IllegalArgumentException("OrOperation requires at least one argument.");
         }
 
         for (Object arg : args) {
@@ -29,17 +29,17 @@ public class AndFunction implements Function<Boolean, Boolean> {
                 throw new IllegalArgumentException("Argument must be a Boolean or a Boolean expression.");
             }
 
-            if (!result) {
-                // 短路：一旦发现为假则立即返回 false
-                return false;
+            if (result) {
+                // 短路逻辑：一旦发现真值，立即返回 true
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
     public String name() {
-        return "&&";
+        return "||";
     }
 
     @Override

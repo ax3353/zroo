@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class PrintFunction implements Function<Object, Void> {
+public class Print implements Function<Object, Void> {
 
     @Override
     public Void execute(Evaluator evaluator, List<Object> args) {

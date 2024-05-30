@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class ToDateFunction implements Function<String, Date> {
+public class ToDate implements Function<String, Date> {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 

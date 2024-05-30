@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class EqualsFunction implements Function<Object, Boolean> {
+public class Equals implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {

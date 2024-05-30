@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class NotFunction implements Function<Object, Boolean> {
+public class Not implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {

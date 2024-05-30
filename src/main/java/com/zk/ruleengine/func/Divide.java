@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class DivideFunction implements Function<Number, Number> {
+public class Divide implements Function<Number, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Number> args) {

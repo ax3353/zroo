@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class ToIntFunction implements Function<String, Integer> {
+public class ToInt implements Function<String, Integer> {
 
     @Override
     public Integer execute(Evaluator evaluator, List<String> args) {

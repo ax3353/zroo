@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class StrInputFunction implements Function<String, String> {
+public class StrInput implements Function<String, String> {
 
     @Override
     public String execute(Evaluator evaluator, List<String> args) {

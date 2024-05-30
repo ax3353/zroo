@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class IfFunction implements Function<Object, Object> {
+public class If implements Function<Object, Object> {
 
     @Override
     public Object execute(Evaluator evaluator, List<Object> args) {

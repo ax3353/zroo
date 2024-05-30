@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zk
  */
-public class ToStrFunction implements Function<Object, String> {
+public class ToStr implements Function<Object, String> {
 
     @Override
     public String execute(Evaluator evaluator, List<Object> args) {
