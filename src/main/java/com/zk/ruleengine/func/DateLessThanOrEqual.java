@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 比较两个日期之间的大小
+ * 参表为两个日期字符串，返回布尔类型
  * @author zk
  */
 public class DateLessThanOrEqual implements Function<String, Boolean> {

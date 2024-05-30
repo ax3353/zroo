@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 乘法运算，支持多个参数连乘(eg: a * b * c)
  * @author zk
  */
 public class Multiply implements Function<Number, Number> {

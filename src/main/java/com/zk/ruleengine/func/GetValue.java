@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 从上下文中取值，支持类似el的表达式(eg: person.age)
  * @author zk
  */
 public class GetValue implements Function<String, Object> {
 
     @Override
     public Object execute(Evaluator evaluator, List<String> args) {
-        if (args.size() != 1 || args.get(0) == null) {
+        if (args.size() != 1) {
             throw new IllegalArgumentException("GetValueFunction requires exactly one string argument.");
         }
 
@@ -30,8 +31,4 @@ public class GetValue implements Function<String, Object> {
         return "@value";
     }
 
-    @Override
-    public boolean evalArgsFirst() {
-        return true;
-    }
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 字符串转日期
  * @author zk
  */
 public class ToDate implements Function<String, Date> {

@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 打印运算，等同于System.out.println()
  * @author zk
  */
 public class Print implements Function<Object, Void> {

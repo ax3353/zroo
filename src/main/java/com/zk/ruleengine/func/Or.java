@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 逻辑或(||)运算
  * @author zk
  */
 public class Or implements Function<Boolean, Boolean> {
@@ -13,7 +14,7 @@ public class Or implements Function<Boolean, Boolean> {
     @Override
     public Boolean execute(Evaluator evaluator, List<Boolean> args) {
         if (args.isEmpty()) {
-            throw new IllegalArgumentException("OrOperation requires at least one argument.");
+            throw new IllegalArgumentException("OrFunction requires at least one argument.");
         }
 
         for (Object arg : args) {

@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 数值输入(eg: 123 或 123.45)
  * @author zk
  */
 public class NumberInput implements Function<Number, Number> {

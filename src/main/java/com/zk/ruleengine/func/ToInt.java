@@ -6,17 +6,19 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * String转Integer
+ *
  * @author zk
  */
 public class ToInt implements Function<String, Integer> {
 
     @Override
     public Integer execute(Evaluator evaluator, List<String> args) {
-        if (args.isEmpty()) {
-            throw new IllegalArgumentException("IntegerOperation requires at least one argument.");
+        if (args.size() != 1) {
+            throw new IllegalArgumentException("ToIntFunction requires exactly one arguments.");
         }
 
-        return Integer.parseInt(String.valueOf(args.get(0)));
+        return Integer.parseInt(args.get(0));
     }
 
     @Override

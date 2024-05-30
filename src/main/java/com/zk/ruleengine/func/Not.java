@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 逻辑非(!)运算
  * @author zk
  */
 public class Not implements Function<Object, Boolean> {

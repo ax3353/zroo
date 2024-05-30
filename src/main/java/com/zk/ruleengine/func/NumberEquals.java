@@ -6,8 +6,8 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
- * 比较两个数字是否相等。
- * 参数列表为两个数字，返回两个数字是否相等的布尔值
+ * 比较两个数值是否相等
+ * 参数为两个数值，返回布尔类型
  * @author zk
  */
 public class NumberEquals implements Function<Number, Boolean> {
@@ -15,7 +15,7 @@ public class NumberEquals implements Function<Number, Boolean> {
     @Override
     public Boolean execute(Evaluator evaluator, List<Number> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("EqualsFunction requires exactly two arguments.");
+            throw new IllegalArgumentException("NumberEqualsFunction requires exactly two arguments.");
         }
 
         Number first = args.get(0);

@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 
 import java.util.*;
 
-public class ComplexRulesTest {
+public class MapContextTest {
 
     public static void main(String[] args) {
         Map<String, Object> context = new HashMap<>();

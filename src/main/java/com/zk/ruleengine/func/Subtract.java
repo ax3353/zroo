@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 减法运算，支持多个参数连减(eg: a - b - c)
  * @author zk
  */
 public class Subtract implements Function<Number, Number> {

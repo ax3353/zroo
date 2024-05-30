@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Test1 {
+public class FunctionTest {
 
     public static void main(String[] args) {
         Evaluator evaluator = new Evaluator(new HashMap<>());

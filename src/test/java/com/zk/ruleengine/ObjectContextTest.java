@@ -7,7 +7,7 @@ import com.zk.ruleengine.pojo.X;
 import java.util.Arrays;
 import java.util.List;
 
-public class ObjectComplexRulesTest {
+public class ObjectContextTest {
 
     public static void main(String[] args) {
         P p = new P();

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 计算两个日期之间的天数差
+ * 参表为两个日期字符串，返回布尔类型
  * @author zk
  */
 public class DateGreaterThanOrEqual implements Function<String, Boolean> {

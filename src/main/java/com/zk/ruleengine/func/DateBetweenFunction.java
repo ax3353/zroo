@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 计算两个日期之间的天数差。
- * 参数列表为两个日期字符串，返回两个日期之间的天数差
+ * 参数为两个日期字符串，返回两个日期之间的天数差
  * @author zk
  */
 public class DateBetweenFunction implements Function<String, Long> {

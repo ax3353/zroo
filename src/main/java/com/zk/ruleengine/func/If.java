@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * if-elseif-else
  * @author zk
  */
 public class If implements Function<Object, Object> {

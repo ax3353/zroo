@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 对象扁平化成map
  * @author zk
  */
-public class ObjectToMapUtils {
+public class ObjectFlattener {
 
     private static final String SEPARATOR = ".";
 
@@ -31,12 +32,12 @@ public class ObjectToMapUtils {
     /**
      * List嵌套对象转大list map(扁平化)
      *
-     * @param objectList 源List对象
+     * @param objects 源List对象
      * @return map
      */
-    public static <T> List<Map<String, Object>> listFlatmap(List<T> objectList) {
+    public static <T> List<Map<String, Object>> listFlatmap(List<T> objects) {
         ArrayList<Map<String, Object>> resultList = new ArrayList<>();
-        for (T t : objectList) {
+        for (T t : objects) {
             resultList.add(flatMap(t));
         }
         return resultList;
@@ -57,7 +58,7 @@ public class ObjectToMapUtils {
         if (maps.get(key) != null && value instanceof JSONObject) {
             Map<String, Object> subMaps = (Map) maps.get(key);
             Map<String, Object> map = flatMap(subMaps, newKey);
-            if (map != null && !map.isEmpty()) {
+            if (!map.isEmpty()) {
                 result.putAll(map);
             }
         } else {

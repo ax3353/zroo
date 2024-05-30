@@ -7,13 +7,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
+ * 比较两个数值之间的大小
+ * 参表为两个数值，返回布尔类型
  * @author zk
  */
 public class GreaterThan implements Function<Number, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Number> args) {
-        if (args.size() != 2 || args.get(0) == null || args.get(1) == null) {
+        if (args.size() != 2) {
             throw new IllegalArgumentException("GreaterThanFunction requires exactly two arguments.");
         }
 

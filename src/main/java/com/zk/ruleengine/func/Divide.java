@@ -6,6 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
+ * 除法运算，支持多个参数连除(eg: a / b / c)
  * @author zk
  */
 public class Divide implements Function<Number, Number> {
@@ -41,4 +42,5 @@ public class Divide implements Function<Number, Number> {
     public String name() {
         return "/";
     }
+
 }

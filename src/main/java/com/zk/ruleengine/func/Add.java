@@ -6,7 +6,7 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
- *
+ * 加法运算，支持多个参数连除(eg: a + b + c)
  * @author zk
  */
 public class Add implements Function<Number, Number> {

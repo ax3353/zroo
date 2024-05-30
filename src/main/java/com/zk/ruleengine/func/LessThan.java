@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
+ * 比较两个数值之间的大小
+ * 参表为两个数值，返回布尔类型
  * @author zk
  */
 public class LessThan implements Function<Number, Boolean> {
