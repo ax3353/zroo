@@ -3,11 +3,11 @@ package com.zk.ruleengine.operator;
 import com.alibaba.fastjson.JSONObject;
 import com.zk.ruleengine.utils.ExpressionGenerator;
 
-public class ToDateOperator implements Operator {
+public class DateOperator implements Operator {
 
     private final String operator;
 
-    public ToDateOperator(String operator) {
+    public DateOperator(String operator) {
         this.operator = operator;
     }
 

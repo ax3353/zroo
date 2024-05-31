@@ -53,8 +53,9 @@ public class FunctionFactory {
         register(new DateGreaterThanOrEqual());
         register(new DateLessThan());
         register(new DateLessThanOrEqual());
-        register(new DateBetweenFunction());
+        register(new DateBetween());
         register(new ToDate());
+        register(new Now());
         register(new Print());
     }
 }

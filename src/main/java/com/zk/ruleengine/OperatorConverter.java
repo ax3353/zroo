@@ -31,7 +31,8 @@ public class OperatorConverter {
         register(new ObjectValueOperator("@value"));
         register(new StringValueOperator("strInput"));
         register(new NumberInputOperator("numberInput"));
-        register(new ToDateOperator("toDate"));
+        register(new DateOperator("toDate"));
+        register(new NowOperator("now"));
     }
 
     public static Object convert(String operator, JSONObject jsonObject) {

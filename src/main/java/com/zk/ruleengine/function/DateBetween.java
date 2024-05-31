@@ -12,7 +12,7 @@ import java.util.List;
  * 参数为两个日期字符串，返回两个日期之间的天数差
  * @author zk
  */
-public class DateBetweenFunction implements Function<String, Long> {
+public class DateBetween implements Function<String, Long> {
 
     @Override
     public Long execute(Evaluator evaluator, List<String> args) {
@@ -35,10 +35,5 @@ public class DateBetweenFunction implements Function<String, Long> {
     @Override
     public String name() {
         return "dateBetween";
-    }
-
-    @Override
-    public boolean evalArgsFirst() {
-        return true;
     }
 }
