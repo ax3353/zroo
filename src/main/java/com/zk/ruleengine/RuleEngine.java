@@ -1,26 +1,37 @@
 package com.zk.ruleengine;
 
-import com.alibaba.fastjson.JSON;
 import com.zk.ruleengine.utils.ObjectFlattener;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 规则引擎入口
  * @author zk
  */
 public final class RuleEngine<T, R> {
 
-    public R exec(T t, String ruleExpression) {
+    /**
+     * 执行规则
+     * @param t 上下文对象
+     * @param ruleExpression 规则表达式
+     * @return R
+     */
+    public R execute(T t, String ruleExpression) {
         Map<String, Object> context = ObjectFlattener.flatMap(t);
-        RuleParser<Number> parser = new RuleParser<>(ruleExpression, context);
-        return (R) parser.eval();
+        RuleExecutor<Number> parser = new RuleExecutor<>(ruleExpression, context);
+        return (R) parser.execute();
     }
 
-    public R exec(T t, List<Object> rules) {
+    /**
+     * 执行规则
+     * @param t 上下文对象
+     * @param rules 规则表达式
+     * @return R
+     */
+    public R execute(T t, List<Object> rules) {
         Map<String, Object> context = ObjectFlattener.flatMap(t);
-        String ruleExpression = JSON.toJSONString(rules);
-        RuleParser<Number> parser = new RuleParser<>(ruleExpression, context);
-        return (R) parser.eval();
+        RuleExecutor<Number> parser = new RuleExecutor<>(rules, context);
+        return (R) parser.execute();
     }
 }

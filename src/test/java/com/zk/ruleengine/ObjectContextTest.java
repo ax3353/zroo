@@ -47,7 +47,7 @@ public class ObjectContextTest {
         // 正确的 ["if",["&&",["eq",["@value","educationLevel"],["strInput","PhD"]],[">=",["@value","p.age"],["numberInput",30]]],["-",["@value","workExperience"],["numberInput",1]],["if",["&&",["eq",["@value","educationLevel"],["strInput","PhD"]],["<",["@value","p.age"],["numberInput",30]]],["/",["@value","workExperience"],["toInt","2"]],["if",["&&",["!",["eq","educationLevel",["strInput","PhD"]]],["eq",["strInput","hasManagementExperience"],["strInput","hasManagementExperience"]]],["/",["@value","workExperience"],["numberInput",2]],["print","没有任何条件成立"]]]]
         // 得到的 ["if",["&&",["eq",["@value","educationLevel",["strInput","PhD"]]],[">=",["@value","p.age",["numberInput",30]]]],["-",["@value","workExperience",["numberInput",1]]],["if",["&&",["eq",["@value","educationLevel",["strInput","PhD"]]],["<",["@value","p.age",["numberInput",30]]]],["/",["@value","workExperience",["toInt",2]]],["if",["&&",["!",["eq","educationLevel",["strInput","PhD"]]],["eq",["strInput","hasManagementExperience","strInput","hasManagementExperience"]]],["/",["@value","workExperience",["numberInput",2]]],["print","没有任何条件成立"]]]]
         RuleEngine<X, Double> xRuleEngine = new RuleEngine<>();
-        Double exec = xRuleEngine.exec(x, rules);
+        Double exec = xRuleEngine.execute(x, rules);
         System.out.println(exec);
     }
 }

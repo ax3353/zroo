@@ -1,6 +1,6 @@
 package com.zk.ruleengine;
 
-import com.zk.ruleengine.func.*;
+import com.zk.ruleengine.function.*;
 
 import java.util.HashMap;
 import java.util.Map;

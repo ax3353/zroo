@@ -53,12 +53,12 @@ public class MapContextTest {
         String ruleJsonStr = JSON.toJSONString(rules);
         System.out.println(ruleJsonStr);
 
-        RuleParser<Number> parser = new RuleParser<>(rules, context);
-        Number eval1 = parser.eval();
+        RuleExecutor<Number> parser = new RuleExecutor<>(rules, context);
+        Number eval1 = parser.execute();
         System.out.println("Arrays Evaluation Result: " + eval1);
 
-        RuleParser<Number> parser1 = new RuleParser<>(ruleJsonStr, context);
-        Number eval2 = parser1.eval();
+        RuleExecutor<Number> parser1 = new RuleExecutor<>(ruleJsonStr, context);
+        Number eval2 = parser1.execute();
         System.out.println("RuleJsonStr Evaluation Result: " + eval2);
     }
 }

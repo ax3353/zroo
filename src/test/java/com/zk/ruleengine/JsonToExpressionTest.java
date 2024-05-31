@@ -1,7 +1,7 @@
 package com.zk.ruleengine;
 
 import com.alibaba.fastjson.JSON;
-import com.zk.ruleengine.utils.ExpressionConverter;
+import com.zk.ruleengine.utils.ExpressionGenerator;
 
 public class JsonToExpressionTest {
     public static void main(String[] args) {
@@ -17,7 +17,7 @@ public class JsonToExpressionTest {
         // if-else
 //        String ruleJsonString = "{\"type\":\"conditional\",\"branches\":[{\"condition\":{\"type\":\"&&\",\"left\":{\"type\":\"eq\",\"left\":{\"type\":\"@value\",\"value\":\"deviceName\"},\"right\":{\"type\":\"strInput\",\"value\":\"河庄门店\"}},\"right\":{\"type\":\"&&\",\"left\":{\"type\":\">=\",\"left\":{\"type\":\"*\",\"left\":{\"type\":\"@value\",\"value\":\"pressure\"},\"right\":{\"type\":\"numberInput\",\"value\":5}},\"right\":{\"type\":\"numberInput\",\"value\":30}},\"right\":{\"type\":\"<=\",\"left\":{\"type\":\"*\",\"left\":{\"type\":\"@value\",\"value\":\"pressure\"},\"right\":{\"type\":\"numberInput\",\"value\":5}},\"right\":{\"type\":\"numberInput\",\"value\":50}}}},\"branch\":{\"type\":\"print\",\"value\":\"执行操作A\"}},{\"branch\":{\"type\":\"print\",\"value\":\"没有满足任何条件时执行操作C\"}}]}";
 
-        Object ruleExpression = ExpressionConverter.toRuleExpression(ruleJsonString);
+        Object ruleExpression = ExpressionGenerator.toRuleExpression(ruleJsonString);
         System.out.println(JSON.toJSONString(ruleExpression));
     }
 }
