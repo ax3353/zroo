@@ -142,17 +142,21 @@ if-elseif-else的json参数示例:
 			"left": {
 				"type": "dateBetween",
 				"left": {
-					"type": "@value",
-					"value": "alarmTime"
+					"type": "now",
+					"value": "date"
 				},
-				"right": {
+				"mid": {
 					"type": "@value",
 					"value": "createTime"
+				},
+				"right": {
+					"type": "strInput",
+					"value": "timeUint"
 				}
 			},
 			"right": {
 				"type": "numberInput",
-				"value": 2.0
+				"value": 2
 			}
 		},
 		"branch": {
