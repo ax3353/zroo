@@ -20,7 +20,7 @@ public class OperatorConverter {
                 "&&", "||", "eq",
                 ">=", "<=", "<", ">",
                 "+", "-", "*", "/", "==",
-                "date>=", "date<=", "dateBetween", "date+", "date-"
+                "date>=", "date<=", "date+", "date-"
         };
         for (String op : operators) {
             register(new BinaryOperator(op));
@@ -31,7 +31,8 @@ public class OperatorConverter {
         register(new ObjectValueOperator("@value"));
         register(new StringValueOperator("strInput"));
         register(new NumberInputOperator("numberInput"));
-        register(new DateOperator("toDate"));
+        register(new DateBetweenOperator("dateBetween"));
+        register(new ToDateOperator("toDate"));
         register(new NowOperator("now"));
     }
 
