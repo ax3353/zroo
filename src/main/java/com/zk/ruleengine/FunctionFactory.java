@@ -44,6 +44,7 @@ public class FunctionFactory {
         register(new Or());
         register(new Not());
         register(new ToStr());
+        register(new RightSub());
         register(new ToInt());
         register(new If());
         register(new GetValue());
