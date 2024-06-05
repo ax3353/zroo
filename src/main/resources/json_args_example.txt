@@ -151,7 +151,7 @@ if-elseif-else的json参数示例:
 				},
 				"right": {
 					"type": "strInput",
-					"value": "timeUint"
+					"value": "timeUnit"
 				}
 			},
 			"right": {

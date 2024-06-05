@@ -1,9 +1,10 @@
 package com.zk.ruleengine.operator;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zk.ruleengine.OperatorPolicy;
 import com.zk.ruleengine.utils.ExpressionGenerator;
 
-public class IfOperator implements Operator {
+public class IfOperator implements OperatorPolicy {
 
     private static final String operator = "if";
 

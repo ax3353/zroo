@@ -1,8 +1,9 @@
 package com.zk.ruleengine.operator;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zk.ruleengine.OperatorPolicy;
 
-public class StringValueOperator implements Operator {
+public class StringValueOperator implements OperatorPolicy {
 
     private final String operator;
 

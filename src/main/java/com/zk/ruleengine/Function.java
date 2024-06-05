@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * 函数定义，一切规则皆为函数
- *
  * @author zk
  */
 public interface Function<T, R> {

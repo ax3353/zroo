@@ -1,13 +1,14 @@
 package com.zk.ruleengine.operator;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zk.ruleengine.OperatorPolicy;
 import com.zk.ruleengine.utils.ExpressionGenerator;
 
-public class NowOperator implements Operator {
+public class BoolValueOperator implements OperatorPolicy {
 
     private final String operator;
 
-    public NowOperator(String operator) {
+    public BoolValueOperator(String operator) {
         this.operator = operator;
     }
 
@@ -20,7 +21,7 @@ public class NowOperator implements Operator {
     public Object convert(JSONObject jsonObject) {
         return new Object[]{
                 operator,
-                jsonObject.getString("value")
+                ExpressionGenerator.toRuleExpression(jsonObject.getJSONObject("condition"))
         };
     }
 }

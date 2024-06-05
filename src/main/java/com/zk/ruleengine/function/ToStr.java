@@ -16,7 +16,7 @@ public class ToStr implements Function<Object, String> {
         if (args.size() != 1) {
             throw new IllegalArgumentException("ToStrFunction takes only one argument.");
         }
-        
+
         return args.get(0).toString();
     }
 

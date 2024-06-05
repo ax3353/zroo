@@ -21,11 +21,9 @@ public class Evaluator {
     }
 
     public Object eval(List<Object> rules) {
-        String funcName = (String) rules.get(0);
-        Function<Object, Object> function = FunctionFactory.getFunction(funcName);
-        if (function == null) {
-            throw new IllegalArgumentException("No function registered for: " + funcName);
-        }
+        // 规则表达的第一个元素必须是函数名
+        String functionName = (String) rules.get(0);
+        Function<Object, Object> function = FunctionFactory.getFunction(functionName);
 
         List<Object> arguments = new ArrayList<>();
         if (function.evalArgsFirst()) {

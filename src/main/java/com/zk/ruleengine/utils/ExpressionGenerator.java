@@ -3,7 +3,8 @@ package com.zk.ruleengine.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zk.ruleengine.OperatorConverter;
+import com.zk.ruleengine.OperatorPolicyFactory;
+import com.zk.ruleengine.OperatorPolicy;
 
 /**
  * 规则表达式生成器
@@ -32,7 +33,7 @@ public class ExpressionGenerator {
         for (int i = branches.size() - 1; i >= 0; i--) {
             JSONObject branch = branches.getJSONObject(i);
             JSONObject condition = branch.getJSONObject("condition");
-            if (condition != null) {
+            if (condition != null) { // if-elseif branch
                 result = new Object[]{
                         "if",
                         toRuleExpression(condition),
@@ -47,6 +48,7 @@ public class ExpressionGenerator {
     }
 
     private static Object handleOtherOperators(JSONObject jsonObject, String operator) {
-        return OperatorConverter.convert(operator, jsonObject);
+        OperatorPolicy policy = OperatorPolicyFactory.getOperator(operator);
+        return policy.convert(jsonObject);
     }
 }

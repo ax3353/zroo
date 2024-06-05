@@ -6,18 +6,18 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
- * 右截取字符串
+ * 左截取字符串
  * @author zk
  */
-public class RightSub implements Function<Object, String> {
+public class LeftSub implements Function<Object, String> {
 
     @Override
     public String execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("RightSubFunction requires exactly two arguments.");
+            throw new IllegalArgumentException("LeftSubFunction requires exactly two arguments.");
         }
 
-        String inputString = args.get(0).toString();
+        String inputString = (String) args.get(0);
         int length = (int) args.get(1);
 
         if (length < 0) {
@@ -28,11 +28,11 @@ public class RightSub implements Function<Object, String> {
             return inputString;
         }
 
-        return inputString.substring(inputString.length() - length);
+        return inputString.substring(0, length);
     }
 
     @Override
     public String name() {
-        return "rightSub";
+        return "leftSub";
     }
 }

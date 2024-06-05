@@ -36,6 +36,10 @@ public class FunctionFactory {
         register(new Subtract());
         register(new Multiply());
         register(new Divide());
+        register(new Abs());
+        register(new Ceil());
+        register(new Floor());
+        register(new Scale());
         register(new GreaterThan());
         register(new GreaterThanOrEqual());
         register(new LessThan());
@@ -44,8 +48,10 @@ public class FunctionFactory {
         register(new Or());
         register(new Not());
         register(new ToStr());
+        register(new LeftSub());
+        register(new MidSub());
         register(new RightSub());
-        register(new ToInt());
+        register(new ToNumber());
         register(new If());
         register(new GetValue());
         register(new StrInput());

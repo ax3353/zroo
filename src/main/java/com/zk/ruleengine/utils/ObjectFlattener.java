@@ -18,7 +18,6 @@ public class ObjectFlattener {
 
     /**
      * 嵌套对象转大map(扁平化)
-     *
      * @param object 源对象
      * @return map
      */
@@ -31,7 +30,6 @@ public class ObjectFlattener {
 
     /**
      * List嵌套对象转大list map(扁平化)
-     *
      * @param objects 源List对象
      * @return map
      */

@@ -2,7 +2,10 @@ package com.zk.ruleengine;
 
 import com.alibaba.fastjson2.JSON;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapContextTest {
 
@@ -53,12 +56,8 @@ public class MapContextTest {
         String ruleJsonStr = JSON.toJSONString(rules);
         System.out.println(ruleJsonStr);
 
-        RuleExecutor<Number> parser = new RuleExecutor<>(rules, context);
-        Number eval1 = parser.execute();
+        RuleEngine engine = RuleEngine.getInstance();
+        Double eval1 = engine.execute(context, ruleJsonStr);
         System.out.println("Arrays Evaluation Result: " + eval1);
-
-        RuleExecutor<Number> parser1 = new RuleExecutor<>(ruleJsonStr, context);
-        Number eval2 = parser1.execute();
-        System.out.println("RuleJsonStr Evaluation Result: " + eval2);
     }
 }

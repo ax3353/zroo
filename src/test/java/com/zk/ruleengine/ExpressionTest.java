@@ -17,8 +17,8 @@ public class ExpressionTest {
         String exp = "[\"if\",[\"&&\",[\"eq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"&&\",[\">=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",30]],[\"<=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",50]]]],[\"toStr\",\"执行操作A\"],[\"if\",[\"==\",[\"dateBetween\",[\"now\",\"datetime\"],[\"@value\",\"createTime\"],[\"strInput\",\"hour\"]],[\"numberInput\",48]],[\"toStr\",\"执行操作B\"],[\"toStr\",\"没有满足任何条件时执行操作C\"]]]";
         System.out.println(exp);
 
-        RuleExecutor<Object> parser = new RuleExecutor<>(exp, context);
-        Object eval = parser.execute();
+        RuleEngine engine = RuleEngine.getInstance();
+        Object eval = engine.execute(context, exp);
         System.out.println(eval);
 
         System.out.println("------------------------------");
@@ -29,16 +29,26 @@ public class ExpressionTest {
 
         String exp1 = "[\"if\",[\"eq\",[\"@value\",\"sex\"],[\"strInput\",\"男\"]],[\"numberInput\",1],[\"if\",[\"eq\",[\"@value\",\"sex\"],[\"strInput\",\"女\"]],[\"numberInput\",2],[\"numberInput\",0]]]";
         System.out.println(exp1);
-
-        RuleExecutor<Object> parser1 = new RuleExecutor<>(exp1, context1);
-        Object eval1 = parser1.execute();
+        Object eval1 = engine.execute(context1, exp1);
         System.out.println(eval1);
 
-        String exp2 = "[\"rightSub\", [\"@value\", \"phone\"], 4]";
-        System.out.println(exp2);
+        System.out.println("------------------------------");
 
-        RuleExecutor<Object> parser2 = new RuleExecutor<>(exp2, context1);
-        Object eval2 = parser2.execute();
+        String exp2 = "[\"midSub\",[\"strInput\",\"abcdef\"],[\"numberInput\",3]]";
+        System.out.println(exp2);
+        Object eval2 = engine.execute(context1, exp2);
         System.out.println(eval2);
+
+        System.out.println("------------------------------");
+
+        Map<String, Object> context2 = new HashMap<>();
+        context2.put("deviceName", "河庄门店");
+        context2.put("pressure", 50);
+        context2.put("alarmTime", "2024-05-02");
+
+        String exp3 = "[\"&&\",[\"eq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"||\",[\"&&\",[\">=\",[\"@value\",\"pressure\"],[\"numberInput\",60]],[\"<=\",[\"@value\",\"pressure\"],[\"numberInput\",100]]],[\"!\",[\"&&\",[\"date>=\",[\"@value\",\"alarmTime\"],[\"strInput\",\"2024-05-01\"]],[\"date<=\",[\"@value\",\"alarmTime\"],[\"strInput\",\"2024-05-20\"]]]]]]";
+        System.out.println(exp3);
+        Boolean eval3 = engine.execute(context2, exp3);
+        System.out.println(eval3);
     }
 }

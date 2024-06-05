@@ -1,12 +1,13 @@
 package com.zk.ruleengine.operator;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zk.ruleengine.OperatorPolicy;
 
-public class NumberInputOperator implements Operator {
+public class NumberValueOperator implements OperatorPolicy {
 
     private final String operator;
 
-    public NumberInputOperator(String operator) {
+    public NumberValueOperator(String operator) {
         this.operator = operator;
     }
 
