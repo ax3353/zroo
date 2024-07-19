@@ -35,11 +35,11 @@ public class ExpressionGenerator_old {
                 result = new Object[]{
                         "if",
                         toRuleExpression(condition),
-                        toRuleExpression(branch.getJSONObject("branch")),
+                        toRuleExpression(branch.getJSONObject("then")),
                         result
                 };
             } else { // else branch
-                result = toRuleExpression(branch.getJSONObject("branch"));
+                result = toRuleExpression(branch.getJSONObject("then"));
             }
         }
         return result;
@@ -71,7 +71,7 @@ public class ExpressionGenerator_old {
                 // 日期运算
             case "date>=":
             case "date<=":
-            case "dateBetween":
+            case "dayBetween":
             case "date+":
             case "date-":
                 return new Object[]{

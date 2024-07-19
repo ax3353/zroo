@@ -15,7 +15,7 @@ public class ToNumber implements Function<String, Number> {
     @Override
     public Number execute(Evaluator evaluator, List<String> args) {
         if (args.size() != 1) {
-            throw new IllegalArgumentException("ToIntFunction requires exactly one arguments.");
+            throw new IllegalArgumentException("ToNumberFunction requires exactly one arguments.");
         }
 
         return new BigDecimal(args.get(0));

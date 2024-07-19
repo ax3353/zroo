@@ -3,6 +3,7 @@ package com.zk.ruleengine;
 import com.alibaba.fastjson.JSON;
 import com.zk.ruleengine.utils.ObjectFlattener;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,9 @@ public final class RuleEngine {
      */
     public <R> R execute(Object context, String ruleExpression) {
         Map<String, Object> contextMap;
-        if (context instanceof Map) {
+        if (context == null) {
+            contextMap = new HashMap<>();
+        } else if (context instanceof Map) {
             contextMap = (Map<String, Object>) context;
         } else {
             contextMap = ObjectFlattener.flatMap(context);

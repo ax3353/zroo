@@ -57,7 +57,7 @@
 	"right": {
 		"type": "==",
 		"left": {
-			"type": "dateBetween",
+			"type": "dayBetween",
 			"left": {
 				"type": "@value",
 				"value": "alarmTime"
@@ -132,7 +132,7 @@ if-elseif-else的json参数示例:
 				}
 			}
 		},
-		"branch": {
+		"then": {
 			"type": "print",
 			"value": "执行操作A"
 		}
@@ -140,7 +140,7 @@ if-elseif-else的json参数示例:
 		"condition": {
 			"type": "==",
 			"left": {
-				"type": "dateBetween",
+				"type": "dayBetween",
 				"left": {
 					"type": "now",
 					"value": "date"
@@ -159,12 +159,12 @@ if-elseif-else的json参数示例:
 				"value": 2
 			}
 		},
-		"branch": {
+		"then": {
 			"type": "print",
 			"value": "执行操作B"
 		}
 	}, {
-		"branch": {
+		"then": {
 			"type": "print",
 			"value": "没有满足任何条件时执行操作C"
 		}
@@ -229,12 +229,12 @@ if-else的json参数示例:
 				}
 			}
 		},
-		"branch": {
+		"then": {
 			"type": "print",
 			"value": "执行操作A"
 		}
 	}, {
-		"branch": {
+		"then": {
 			"type": "print",
 			"value": "没有满足任何条件时执行操作B"
 		}

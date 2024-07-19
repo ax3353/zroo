@@ -27,7 +27,8 @@ public class OperatorPolicyFactory {
                 "&&", "||", "eq",
                 ">=", "<=", "<", ">",
                 "+", "-", "*", "/", "==",
-                "date>=", "date<=", "date+", "date-",
+                "date>", "date>=", "date<", "date<=",
+                "dayBetween", "hourBetween", "minuteBetween", "secondBetween",
                 "leftSub", "rightSub", "midSub"
         };
         for (String op : binaryOperators) {
@@ -41,21 +42,24 @@ public class OperatorPolicyFactory {
         }
 
         // 取Object值运算符批量注册
-        String[] objectValueOperators = {"@value", "abs", "ceil", "floor", "scale"};
+        String[] objectValueOperators = {"@value"};
         for (String op : objectValueOperators) {
             register(new ObjectValueOperator(op));
         }
 
         // 取Number值运算符批量注册
-        String[] numberValueOperators = {"numberInput", "toNumber"};
+        String[] numberValueOperators = {"numberInput", "toNumber", "abs", "ceil", "floor", "scale"};
         for (String op : numberValueOperators) {
             register(new NumberValueOperator(op));
         }
 
+        // 转LocalDate值运算符批量注册
+        String[] dateOperators = {"toDate", "dateInput", "dateTimeInput"};
+        for (String op : dateOperators) {
+            register(new ToDateOperator(op));
+        }
+
         // 额外不通用的运算符注册
-        register(new IfOperator());
         register(new BoolValueOperator("!"));
-        register(new ToDateOperator("toDate"));
-        register(new DateBetweenOperator("dateBetween"));
     }
 }

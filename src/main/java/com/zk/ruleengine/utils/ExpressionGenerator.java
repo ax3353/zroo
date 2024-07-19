@@ -37,11 +37,11 @@ public class ExpressionGenerator {
                 result = new Object[]{
                         "if",
                         toRuleExpression(condition),
-                        toRuleExpression(branch.getJSONObject("branch")),
+                        toRuleExpression(branch.getJSONObject("then")),
                         result
                 };
             } else { // else branch
-                result = toRuleExpression(branch.getJSONObject("branch"));
+                result = toRuleExpression(branch.getJSONObject("then"));
             }
         }
         return result;

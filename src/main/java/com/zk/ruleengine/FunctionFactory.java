@@ -56,11 +56,16 @@ public class FunctionFactory {
         register(new GetValue());
         register(new StrInput());
         register(new NumberInput());
+        register(new DateInput());
+        register(new DateTimeInput());
         register(new DateGreaterThan());
         register(new DateGreaterThanOrEqual());
         register(new DateLessThan());
         register(new DateLessThanOrEqual());
-        register(new DateBetween());
+        register(new DayBetween());
+        register(new HourBetween());
+        register(new MinuteBetween());
+        register(new SecondBetween());
         register(new ToDate());
         register(new Now());
         register(new Print());
