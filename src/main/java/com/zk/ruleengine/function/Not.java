@@ -18,14 +18,14 @@ public class Not implements Function<Object, Boolean> {
         }
 
         Object arg = args.get(0);
+
+        // 如果参数是一个列表（表达式），需要先评估
         if (arg instanceof List) {
-            Object result = evaluator.eval((List<Object>) arg);
-            if (result instanceof Boolean) {
-                return !(Boolean) result;
-            } else {
-                throw new IllegalArgumentException("Argument must evaluate to a Boolean value.");
-            }
-        } else if (arg != null) {
+            arg = evaluator.eval((List<Object>) arg);
+        }
+
+        // 处理评估后的结果
+        if (arg instanceof Boolean) {
             return !(Boolean) arg;
         } else {
             throw new IllegalArgumentException("Argument must be a Boolean value or an expression list.");

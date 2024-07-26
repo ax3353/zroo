@@ -61,5 +61,6 @@ public class OperatorPolicyFactory {
 
         // 额外不通用的运算符注册
         register(new BoolValueOperator("!"));
+        register(new NotOperator());
     }
 }
