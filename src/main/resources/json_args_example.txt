@@ -75,103 +75,6 @@
 }
 
 ----------------------------------------------------------------------------------------------
-if-elseif-else的json参数示例:
-{
-	"type": "conditional",
-	"branches": [{
-		"condition": {
-			"type": "&&",
-			"left": {
-				"type": "eq",
-				"left": {
-					"type": "@value",
-					"value": "deviceName"
-				},
-				"right": {
-					"type": "strInput",
-					"value": "河庄门店"
-				}
-			},
-			"right": {
-				"type": "&&",
-				"left": {
-					"type": ">=",
-					"left": {
-						"type": "*",
-						"left": {
-							"type": "@value",
-							"value": "pressure"
-						},
-						"right": {
-							"type": "numberInput",
-							"value": 5
-						}
-					},
-					"right": {
-						"type": "numberInput",
-						"value": 30
-					}
-				},
-				"right": {
-					"type": "<=",
-					"left": {
-						"type": "*",
-						"left": {
-							"type": "@value",
-							"value": "pressure"
-						},
-						"right": {
-							"type": "numberInput",
-							"value": 5
-						}
-					},
-					"right": {
-						"type": "numberInput",
-						"value": 50
-					}
-				}
-			}
-		},
-		"then": {
-			"type": "print",
-			"value": "执行操作A"
-		}
-	}, {
-		"condition": {
-			"type": "==",
-			"left": {
-				"type": "dayBetween",
-				"left": {
-					"type": "now",
-					"value": "date"
-				},
-				"mid": {
-					"type": "@value",
-					"value": "createTime"
-				},
-				"right": {
-					"type": "strInput",
-					"value": "timeUnit"
-				}
-			},
-			"right": {
-				"type": "numberInput",
-				"value": 2
-			}
-		},
-		"then": {
-			"type": "print",
-			"value": "执行操作B"
-		}
-	}, {
-		"then": {
-			"type": "print",
-			"value": "没有满足任何条件时执行操作C"
-		}
-	}]
-}
-
-----------------------------------------------------------------------------------------------
 if-else的json参数示例:
 {
 	"type": "conditional",
@@ -237,6 +140,103 @@ if-else的json参数示例:
 		"then": {
 			"type": "print",
 			"value": "没有满足任何条件时执行操作B"
+		}
+	}]
+}
+
+
+----------------------------------------------------------------------------------------------
+if-elseif-else的json参数示例:
+{
+	"type": "conditional",
+	"branches": [{
+		"condition": {
+			"type": "&&",
+			"left": {
+				"type": "!",
+				"right": {
+					"type": "eq",
+					"left": {
+						"type": "@value",
+						"value": "deviceName"
+					},
+					"right": {
+						"type": "strInput",
+						"value": "河庄门店"
+					}
+				}
+			},
+			"right": {
+				"type": "&&",
+				"left": {
+					"type": ">=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 30
+					}
+				},
+				"right": {
+					"type": "<=",
+					"left": {
+						"type": "*",
+						"left": {
+							"type": "@value",
+							"value": "pressure"
+						},
+						"right": {
+							"type": "numberInput",
+							"value": 5
+						}
+					},
+					"right": {
+						"type": "numberInput",
+						"value": 50
+					}
+				}
+			}
+		},
+		"then": {
+			"type": "strInput",
+			"value": "执行操作A"
+		}
+	}, {
+		"condition": {
+			"type": "==",
+			"left": {
+				"type": "dayBetween",
+				"left": {
+					"type": "@value",
+					"value": "alarmTime"
+				},
+				"right": {
+					"type": "@value",
+					"value": "createTime"
+				}
+			},
+			"right": {
+				"type": "numberInput",
+				"value": 2.0
+			}
+		},
+		"then": {
+			"type": "strInput",
+			"value": "执行操作B"
+		}
+	}, {
+		"then": {
+			"type": "strInput",
+			"value": "没有满足任何条件时执行操作C"
 		}
 	}]
 }

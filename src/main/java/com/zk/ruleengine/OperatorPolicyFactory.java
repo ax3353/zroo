@@ -24,7 +24,7 @@ public class OperatorPolicyFactory {
     static {
         // 二元运算符批量注册
         String[] binaryOperators = {
-                "&&", "||", "eq",
+                "&&", "||", "eq", "neq", "contains", "notContains",
                 ">=", "<=", "<", ">",
                 "+", "-", "*", "/", "==",
                 "date>", "date>=", "date<", "date<=",
@@ -36,7 +36,7 @@ public class OperatorPolicyFactory {
         }
 
         // 取String值运算符批量注册
-        String[] stringValueOperators = {"print", "strInput", "now", "toStr"};
+        String[] stringValueOperators = {"print", "strInput", "nowDate", "nowDateTime", "toStr"};
         for (String op : stringValueOperators) {
             register(new StringValueOperator(op));
         }

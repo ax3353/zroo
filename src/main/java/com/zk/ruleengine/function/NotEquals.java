@@ -9,18 +9,18 @@ import java.util.List;
  * 两个对象equals比较
  * @author zk
  */
-public class Equals implements Function<Object, Boolean> {
+public class NotEquals implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("Equals Function requires exactly 2 arguments.");
+            throw new IllegalArgumentException("NotEquals Function requires exactly 2 arguments.");
         }
-        return args.get(0).equals(args.get(1));
+        return !args.get(0).equals(args.get(1));
     }
 
     @Override
     public String name() {
-        return "eq";
+        return "neq";
     }
 }

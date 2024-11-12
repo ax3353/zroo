@@ -31,6 +31,9 @@ public class FunctionFactory {
     // 注册默认操作
     static {
         register(new Equals());
+        register(new NotEquals());
+        register(new Contains());
+        register(new NotContains());
         register(new NumberEquals());
         register(new Add());
         register(new Subtract());
@@ -67,7 +70,8 @@ public class FunctionFactory {
         register(new MinuteBetween());
         register(new SecondBetween());
         register(new ToDate());
-        register(new Now());
+        register(new NowDate());
+        register(new NowDateTime());
         register(new Print());
     }
 }

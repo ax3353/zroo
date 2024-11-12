@@ -6,21 +6,22 @@ import com.zk.ruleengine.Function;
 import java.util.List;
 
 /**
- * 两个对象equals比较
+ * 数值对象是否不为空
  * @author zk
  */
-public class Equals implements Function<Object, Boolean> {
+public class NumberIsNotNull implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {
-        if (args.size() != 2) {
-            throw new IllegalArgumentException("Equals Function requires exactly 2 arguments.");
+        if (args.size() != 1) {
+            throw new IllegalArgumentException("NumberIsNotNull requires exactly one arguments.");
         }
-        return args.get(0).equals(args.get(1));
+
+        return args.get(0) != null;
     }
 
     @Override
     public String name() {
-        return "eq";
+        return "numberIsNotNull";
     }
 }
