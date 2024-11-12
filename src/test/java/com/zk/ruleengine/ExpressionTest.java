@@ -1,5 +1,6 @@
 package com.zk.ruleengine;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class ExpressionTest {
         context.put("phone", "18576481122");
         context.put("sex", "男");
         context.put("hidden_danger_code", 10);
+        context.put("report_time", LocalDate.now());
 
         System.out.println("------------------------------0");
 //        String exp = "[\"if\",[\"&&\",[\"eq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"&&\",[\">=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",30]],[\"<=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",50]]]],[\"print\",\"执行操作A\"],[\"if\",[\"==\",[\"dayBetween\",[\"@value\",\"alarmTime\"],[\"@value\",\"createTime\"]]],[\"print\",\"执行操作B\"],[\"print\",\"没有满足任何条件时执行操作C\"]]]";
@@ -49,7 +51,7 @@ public class ExpressionTest {
 
         System.out.println("------------------------------4");
 
-        String exp4 = "[\">=\",[\"-\",[\"*\",[\"*\",[\"*\",[\"*\",[\"@value\",\"hidden_danger_code\"],[\"numberInput\",5]],[\"numberInput\",6]],[\"numberInput\",7]],[\"numberInput\",8]],[\"numberInput\",3]],[\"numberInput\",300]]";
+        String exp4 = "[\"&&\",[\">=\",[\"-\",[\"*\",[\"*\",[\"*\",[\"*\",[\"@value\",\"hidden_danger_code\"],[\"numberInput\",5]],[\"numberInput\",6]],[\"numberInput\",7]],[\"numberInput\",8]],[\"numberInput\",3]],[\"numberInput\",3000]],[\"date>\",[\"@value\",\"report_time\"],[\"dateInput\",\"2024-11-11\"]]]";
         System.out.println(exp4);
         Object eval4 = engine.execute(context, exp4);
         System.out.println(eval4);

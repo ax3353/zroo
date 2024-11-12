@@ -21,7 +21,7 @@ public class ToDateOperator implements OperatorPolicy {
     public Object convert(JSONObject jsonObject) {
         return new Object[]{
                 operator,
-                ExpressionGenerator.toRuleExpression(jsonObject.getJSONObject("value"))
+                jsonObject.getString("value")
         };
     }
 }
