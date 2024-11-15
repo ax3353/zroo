@@ -3,7 +3,6 @@ package com.zk.ruleengine.function;
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,8 +12,6 @@ import java.util.List;
  * @author zk
  */
 public class DateLessThanOrEqual implements Function<LocalDate, Boolean> {
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public Boolean execute(Evaluator evaluator, List<LocalDate> args) {
