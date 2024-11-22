@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * 对象扁平化成map
+ *
  * @author zk
  */
 public class ObjectFlattener {

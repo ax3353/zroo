@@ -3,6 +3,7 @@ package com.zk.ruleengine.function;
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -14,20 +15,26 @@ public class Abs implements Function<Number, Number> {
     @Override
     public Number execute(Evaluator evaluator, List<Number> args) {
         if (args.size() != 1) {
-            throw new IllegalArgumentException("AbsFunction requires exactly one argument.");
+            throw new IllegalArgumentException("Abs Function requires exactly one argument.");
         }
 
-        Number number1 = args.get(0);
-        if (number1 instanceof Integer) {
-            return Math.abs((Integer) number1);
+        Number number = args.get(0);
+        if (number instanceof Integer) {
+            return Math.abs((Integer) number);
         }
-        if (number1 instanceof Long) {
-            return Math.abs((Long) number1);
+        if (number instanceof Long) {
+            return Math.abs((Long) number);
         }
-        if (number1 instanceof Double) {
-            return Math.abs((Double) number1);
+        if (number instanceof Float) {
+            return Math.abs((Float) number);
         }
-        throw new IllegalArgumentException("AbsFunction parameter must be of type Number.");
+        if (number instanceof Double) {
+            return Math.abs((Double) number);
+        }
+        if (number instanceof BigDecimal) {
+            return ((BigDecimal) number).abs();
+        }
+        throw new IllegalArgumentException("Abs Function parameter must be of type Number.");
     }
 
     @Override

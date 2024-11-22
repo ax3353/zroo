@@ -21,24 +21,28 @@ public class FunctionTest {
         BigDecimal result1 = operation1.execute(evaluator, rule1);
         System.out.println("int Operation Result: " + result1);
 
-        List<Integer> rule2 = Arrays.asList(1, 2, 3);
-        Function<Integer, Double> operation2 = FunctionFactory.getFunction("/");
-        Double result2 = operation2.execute(evaluator, rule2);
-        System.out.println("add Operation Result: " + result2);
+        List<Object> multiplyParam = Arrays.asList("3", 1, new BigDecimal("6"));
+        Function<Object, Number> multiply = FunctionFactory.getFunction("*");
+        Number multiplyResult = multiply.execute(evaluator, multiplyParam);
+        System.out.println("multiply Operation Result: " + multiplyResult);
 
-        List<Boolean> rule3 = Arrays.asList(false, true);
-        Function<Boolean, Boolean> operation3 = FunctionFactory.getFunction("||");
-        Boolean execute = operation3.execute(evaluator, rule3);
-        System.out.println(execute);
+        List<Object> divideParam = Arrays.asList("18", 2, new BigDecimal("6.000"));
+        Function<Object, Number> operation2 = FunctionFactory.getFunction("/");
+        Number result2 = operation2.execute(evaluator, divideParam);
+        System.out.println("divide Operation Result: " + result2);
 
-        List<Boolean> rule4 = Arrays.asList(true, false);
-        Function<Boolean, Boolean> operation4 = FunctionFactory.getFunction("if");
-        Boolean execute4 = operation4.execute(evaluator, rule4);
-        System.out.println(execute4);
+        List<Object> addParam = Arrays.asList("3", 1, new BigDecimal(6));
+        Function<Object, Number> add = FunctionFactory.getFunction("+");
+        Number addResult = add.execute(evaluator, addParam);
+        System.out.println("add Operation Result: " + addResult);
 
-        List<String> rule5 = Collections.singletonList("date");
-        Function<String, Object> nowFunction = FunctionFactory.getFunction("now");
-        Object execute5 = nowFunction.execute(evaluator, rule5);
+        List<Object> minusParam = Arrays.asList("9", 1, new BigDecimal(6));
+        Function<Object, Number> minus = FunctionFactory.getFunction("-");
+        Number minusResult = minus.execute(evaluator, minusParam);
+        System.out.println("minus Operation Result: " + minusResult);
+
+        Function<String, Object> nowFunction = FunctionFactory.getFunction("nowDate");
+        Object execute5 = nowFunction.execute(evaluator, null);
         System.out.println(execute5);
     }
 }

@@ -3,6 +3,9 @@ package com.zk.ruleengine.operator;
 import com.alibaba.fastjson.JSONObject;
 import com.zk.ruleengine.OperatorPolicy;
 
+/**
+ * @author zk
+ */
 public class ObjectValueOperator implements OperatorPolicy {
 
     private final String operator;

@@ -30,11 +30,16 @@ public class FunctionFactory {
 
     // 注册默认操作
     static {
-        register(new Equals());
-        register(new NotEquals());
+        register(new StrEqual());
+        register(new StrNotEqual());
+        register(new Blank());
+        register(new Null());
+        register(new NotNull());
+        register(new NotBlank());
         register(new Contains());
         register(new NotContains());
-        register(new NumberEquals());
+        register(new NumberEqual());
+        register(new NumberNotEqual());
         register(new Add());
         register(new Subtract());
         register(new Multiply());
@@ -59,8 +64,11 @@ public class FunctionFactory {
         register(new GetValue());
         register(new StrInput());
         register(new NumberInput());
+        register(new TimeInput());
         register(new DateInput());
         register(new DateTimeInput());
+        register(new DateEqual());
+        register(new DateNotEqual());
         register(new DateGreaterThan());
         register(new DateGreaterThanOrEqual());
         register(new DateLessThan());
@@ -72,6 +80,5 @@ public class FunctionFactory {
         register(new ToDate());
         register(new NowDate());
         register(new NowDateTime());
-        register(new Print());
     }
 }

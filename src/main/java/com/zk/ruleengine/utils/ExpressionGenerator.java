@@ -3,12 +3,13 @@ package com.zk.ruleengine.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zk.ruleengine.OperatorPolicyFactory;
 import com.zk.ruleengine.OperatorPolicy;
+import com.zk.ruleengine.OperatorPolicyFactory;
 
 /**
  * 规则表达式生成器
  * 将json参数转规则表达式
+ *
  * @author zk
  */
 public class ExpressionGenerator {
@@ -41,7 +42,10 @@ public class ExpressionGenerator {
                         result
                 };
             } else { // else branch
-                result = toRuleExpression(branch.getJSONObject("then"));
+                JSONObject then = branch.getJSONObject("then");
+                if (then != null && then.size() > 0) {
+                    result = toRuleExpression(then);
+                }
             }
         }
         return result;

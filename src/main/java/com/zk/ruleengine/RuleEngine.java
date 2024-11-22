@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 规则引擎入口
+ *
  * @author zk
  */
 public final class RuleEngine {
@@ -25,7 +26,7 @@ public final class RuleEngine {
     /**
      * 注册自定义的Function
      */
-    public void registerFunction(Function function) {
+    public void registerFunction(Function<?, ?> function) {
         FunctionFactory.register(function);
     }
 
@@ -38,6 +39,7 @@ public final class RuleEngine {
 
     /**
      * 执行规则
+     *
      * @param context        执行所需要的参数上下文
      * @param ruleExpression 规则表达式
      * @return R             执行返回结果

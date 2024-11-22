@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.zk.ruleengine.OperatorPolicy;
 import com.zk.ruleengine.utils.ExpressionGenerator;
 
+/**
+ * @author zk
+ */
 public class BinaryOperator implements OperatorPolicy {
 
     private final String operator;

@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 比较两个日期之间的大小
- * 参表为两个日期字符串，返回布尔类型
+ * 比较两个日期不相等
+ * 参数为两个日期格式的对象，返回布尔类型
  *
  * @author zk
  */
-public class DateLessThan implements Function<Object, Boolean> {
+public class DateNotEqual implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("DateLessThan Function requires exactly two arguments.");
+            throw new IllegalArgumentException("DateEqual Function requires exactly two arguments.");
         }
 
         // 获取传入的两个日期时间
@@ -40,19 +40,19 @@ public class DateLessThan implements Function<Object, Boolean> {
         if (time1 instanceof LocalDateTime && time2 instanceof LocalDateTime) {
             LocalDateTime t1 = (LocalDateTime) time1;
             LocalDateTime t2 = (LocalDateTime) time2;
-            return t1.isBefore(t2);
+            return t1.compareTo(t2) != 0;
         } else if (time1 instanceof java.sql.Date && time2 instanceof java.sql.Date) {
             java.sql.Date t1 = (java.sql.Date) time1;
             java.sql.Date t2 = (java.sql.Date) time2;
-            return t1.before(t2);
+            return t1.compareTo(t2) != 0;
         } else if (time1 instanceof Time && time2 instanceof Time) {
             Time t1 = (Time) time1;
             Time t2 = (Time) time2;
-            return t1.before(t2);
+            return t1.compareTo(t2) != 0;
         } else if (time1 instanceof Timestamp && time2 instanceof Timestamp) {
             Timestamp t1 = (Timestamp) time1;
             Timestamp t2 = (Timestamp) time2;
-            return t1.before(t2);
+            return t1.compareTo(t2) != 0;
         } else {
             return false;
         }
@@ -60,6 +60,6 @@ public class DateLessThan implements Function<Object, Boolean> {
 
     @Override
     public String name() {
-        return "date<";
+        return "date<>";
     }
 }
