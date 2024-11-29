@@ -26,7 +26,9 @@ public class MainTest {
 
     private void test1() {
         String[] tokens = {
-                "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")", "&&", "(", "@alarm_status", "==", "1", ")"
+                "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")",
+                "&&",
+                "(", "@alarm_status", "==", "1", ")"
         };
 
         Object result = RuleExpressionParser.parse(tokens);
@@ -36,7 +38,9 @@ public class MainTest {
 
     private void test2() {
         String[] tokens = {
-                "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")", "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")"
+                "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")",
+                "&&",
+                "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")"
         };
 
         Object result = RuleExpressionParser.parse(tokens);
@@ -47,7 +51,7 @@ public class MainTest {
     private void test3() {
         String[] tokens = {
                 "if", "(", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")", "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")", ")",
-                "then", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")",
+                "then", "(", "(", "@id", "+", "50", ")", "-", "(", "@danger_code", "*", "2", ")", ")",
                 "if", "(", "(", "(", "@id", "-", "10", ")", "<=", "(", "@danger_code", "*", "2", ")", ")", "||", "(", "@danger_status", "==", "0", ")", ")",
                 "then", "(", "abs", "(", "@id", "-", "100", ")", ")",
                 "else", "nowDate", "date>", "2023-01-01"
@@ -72,7 +76,7 @@ public class MainTest {
 
     private void test5() {
         String[] tokens = {
-                "(",  "nowDate", "date>", "2023-01-01", ")"
+                "nowDate", "date>", "2023-01-01"
         };
 
         Object result = RuleExpressionParser.parse(tokens);
