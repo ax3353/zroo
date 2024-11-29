@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 /**
  * 时间输入(eg: "09:01:01")
- *
  * @author zk
  */
 public class TimeInput implements Function<String, Time> {

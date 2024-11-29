@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * 比较两个数值相等
  * 参数为两个数值，返回布尔类型
- *
  * @author zk
  */
 public class NumberNotEqual implements Function<Object, Boolean> {

@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * 比较两个日期大小
  * 参数为两个日期格式的字符串，返回布尔类型
- *
  * @author zk
  */
 public class DateGreaterThan implements Function<Object, Boolean> {
@@ -26,6 +25,10 @@ public class DateGreaterThan implements Function<Object, Boolean> {
         // 获取传入的两个日期时间
         Object time1 = args.get(0);
         Object time2 = args.get(1);
+
+        if (!time1.getClass().equals(time2.getClass())) {
+            throw new IllegalArgumentException("[比较日期大小]的操作参数类型不一致");
+        }
 
         // 字符串先转日期
         if (time1 instanceof String) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 不为空对象
- *
  * @author zk
  */
 public class NotNull implements Function<Object, Boolean> {

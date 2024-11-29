@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 两个字符串相同
- *
  * @author zk
  */
 public class StrEqual implements Function<String, Boolean> {

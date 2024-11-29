@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 两个字符串不同
- *
  * @author zk
  */
 public class StrNotEqual implements Function<String, Boolean> {

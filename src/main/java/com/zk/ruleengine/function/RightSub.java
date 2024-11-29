@@ -17,8 +17,20 @@ public class RightSub implements Function<Object, String> {
             throw new IllegalArgumentException("RightSubFunction requires exactly two arguments.");
         }
 
-        String inputString = args.get(0).toString();
-        int length = (int) args.get(1);
+        int length;
+        String inputString = (String) args.get(0);
+        Object o = args.get(1);
+        if (o instanceof String) {
+            try {
+                length = Integer.parseInt((String) o);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("[右截取操作]的截取长度参数类型不对");
+            }
+        } else if (o instanceof Number) {
+            length = (int) o;
+        } else {
+            throw new IllegalArgumentException("[右截取操作]的截取长度参数类型不对");
+        }
 
         if (length < 0) {
             throw new IllegalArgumentException("Length must be non-negative.");

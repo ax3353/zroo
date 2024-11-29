@@ -18,6 +18,9 @@ public class ExpressionTest {
         context.put("sex", "男");
         context.put("id", "12");
         context.put("hidden_danger_code", "13");
+        context.put("danger_code", 0);
+        context.put("danger_status", 100);
+        context.put("danger_name", "is_alarming");
         context.put("description", "14");
         context.put("event_status", "41");
         context.put("rectification_before_image", "40");
@@ -25,6 +28,7 @@ public class ExpressionTest {
         context.put("created_time", LocalDate.now());
         context.put("flow_meter_code", "123");
         context.put("report_time", "2024-11-20");
+        context.put("nowDate", "2024-11-20");
 
         System.out.println("------------------------------0");
 //        String exp = "[\"if\",[\"&&\",[\"strEq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"&&\",[\">=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",30]],[\"<=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",50]]]],[\"print\",\"执行操作A\"],[\"if\",[\"==\",[\"dayBetween\",[\"@value\",\"alarmTime\"],[\"@value\",\"createTime\"]]],[\"print\",\"执行操作B\"],[\"print\",\"没有满足任何条件时执行操作C\"]]]";
@@ -62,5 +66,33 @@ public class ExpressionTest {
         System.out.println(exp4);
         Object eval4 = engine.execute(context, exp4);
         System.out.println(eval4);
+
+        System.out.println("------------------------------5");
+
+        String exp5 = "[\"&&\",[\">\",[\"+\",[\"@value\",\"id\"],50],[\"*\",[\"@value\",\"danger_code\"],20]],[\"strEq\",[\"rightSub\",[\"@value\",\"danger_name\"],8],\"alarming\"]]";
+        System.out.println(exp5);
+        Object eval5 = engine.execute(context, exp5);
+        System.out.println(eval5);
+
+        System.out.println("------------------------------6");
+
+        String exp6 = "[\"if\",[\"&&\",[\">\",[\"+\",[\"@value\",\"id\"],[\"numberInput\",50]],[\"*\",[\"@value\",\"danger_code\"],[\"numberInput\",2]]],[\"strEq\",[\"leftSub\",[\"@value\",\"danger_name\"],[\"numberInput\",2]],[\"strInput\",\"alarming\"]]],[\"strInput\",\"设备正在报警中\"],[\"if\",[\"||\",[\"<=\",[\"-\",[\"@value\",\"id\"],[\"numberInput\",10]],[\"*\",[\"@value\",\"danger_code\"],[\"numberInput\",2]]],[\"==\",[\"@value\",\"danger_status\"],[\"numberInput\",0]]],[\"strInput\",\"设备已停止报警\"],[\"strInput\",\"设备状态未知\"]]]";
+        System.out.println(exp6);
+        Object eval6 = engine.execute(context, exp6);
+        System.out.println(eval6);
+
+        System.out.println("------------------------------7");
+
+        String exp7 = "[\"if\",[\"&&\",[\">\",[\"+\",[\"@value\",\"id\"],[\"numberInput\",50]],[\"*\",[\"@value\",\"danger_code\"],[\"numberInput\",2]]],[\"strEq\",[\"leftSub\",[\"@value\",\"danger_name\"],[\"numberInput\",2]],[\"strInput\",\"alarming\"]]],[\">\",[\"+\",[\"@value\",\"id\"],[\"numberInput\",50]],[\"*\",[\"@value\",\"danger_code\"],[\"numberInput\",2]]],[\"if\",[\"||\",[\"<=\",[\"-\",[\"@value\",\"id\"],[\"numberInput\",10]],[\"*\",[\"@value\",\"danger_code\"],[\"numberInput\",2]]],[\"==\",[\"@value\",\"danger_status\"],[\"numberInput\",0]]],[\"strInput\",\"aaaaa\"],[\"strInput\",\"bbbbbbbbbbb\"]]]";
+        System.out.println(exp7);
+        Object eval7 = engine.execute(context, exp7);
+        System.out.println(eval7);
+
+        System.out.println("------------------------------8");
+
+        String exp8 = "[\"date>\",[\"nowDate\"],[\"dateInput\",\"2023-01-01\"]]";
+        System.out.println(exp8);
+        Object eval8 = engine.execute(context, exp8);
+        System.out.println(eval8);
     }
 }

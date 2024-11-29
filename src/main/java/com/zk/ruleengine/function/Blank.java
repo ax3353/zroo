@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 为空字符串
- *
  * @author zk
  */
 public class Blank implements Function<String, Boolean> {

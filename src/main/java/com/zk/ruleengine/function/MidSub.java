@@ -17,8 +17,20 @@ public class MidSub implements Function<Object, String> {
             throw new IllegalArgumentException("MidSubFunction requires exactly two arguments.");
         }
 
+        int length;
         String inputString = (String) args.get(0);
-        int length = (int) args.get(1);
+        Object o = args.get(1);
+        if (o instanceof String) {
+            try {
+                length = Integer.parseInt((String) o);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("[中间截取操作]的截取长度参数类型不对");
+            }
+        } else if (o instanceof Number) {
+            length = (int) o;
+        } else {
+            throw new IllegalArgumentException("[中间截取操作]的截取长度参数类型不对");
+        }
 
         if (length < 0) {
             throw new IllegalArgumentException("Length must be non-negative.");

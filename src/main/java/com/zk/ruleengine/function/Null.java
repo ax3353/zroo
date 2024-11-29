@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * 为空对象
- *
  * @author zk
  */
 public class Null implements Function<Object, Boolean> {

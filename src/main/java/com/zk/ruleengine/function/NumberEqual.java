@@ -21,7 +21,7 @@ public class NumberEqual implements Function<Object, Boolean> {
 
         for (Object arg : args) {
             if (!(arg instanceof Number)) {
-                throw new IllegalArgumentException("数字比较操作必须是数字类型");
+                throw new IllegalArgumentException("[数字比较操作]必须是数字类型");
             }
         }
 

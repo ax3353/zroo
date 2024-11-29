@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * 获取当前日期时间
  * 接收一个时间格式的参数，返回yyyy-MM-dd HH:mm:ss格式的时间字符串
- *
  * @author zk
  */
 public class NowDateTime implements Function<String, LocalDateTime> {
