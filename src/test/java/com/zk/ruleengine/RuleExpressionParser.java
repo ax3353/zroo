@@ -15,8 +15,6 @@ public class RuleExpressionParser {
         OPERATOR_ARITY.put("ceil", 1);
         OPERATOR_ARITY.put("floor", 1);
         OPERATOR_ARITY.put("scale", 1);
-//        OPERATOR_ARITY.put("nowDateTime", 1);
-//        OPERATOR_ARITY.put("nowDate", 1);
         OPERATOR_ARITY.put("toDate", 1);
         OPERATOR_ARITY.put("toNumber", 1);
         OPERATOR_ARITY.put("blank", 1);
@@ -122,11 +120,12 @@ public class RuleExpressionParser {
         int arity = OPERATOR_ARITY.get(operator);
         Object[] operands = new Object[arity];
 
+        // 处理其他操作符
         for (int i = arity - 1; i >= 0; i--) {
             if (!stack.isEmpty()) {
                 operands[i] = stack.pop();
             } else {
-                throw new IllegalStateException("缺少该操作符的参数: " + operator);
+                throw new IllegalStateException("操作符[" + operator + "]缺少参数");
             }
         }
 
@@ -157,8 +156,10 @@ public class RuleExpressionParser {
             return new Object[]{"dateInput", token};
         } else if (token.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
             return new Object[]{"dateTimeInput", token};
-        } else if (token.equals("nowDate") || token.equals("nowDateTime")) {
-            return new Object[]{token};
+        } else if (token.equals("&nowDate")) {
+            return new Object[]{"nowDate"};
+        } else if (token.equals("&nowDateTime")) {
+            return new Object[]{"nowDateTime"};
         } else {
             return new Object[]{"strInput", token};
         }
