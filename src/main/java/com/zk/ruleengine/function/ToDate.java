@@ -4,8 +4,9 @@ import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
 import com.zk.ruleengine.utils.Utils;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 import java.util.List;
 
 /**
@@ -13,12 +14,12 @@ import java.util.List;
  *
  * @author zk
  */
-public class ToDate implements Function<Object, java.sql.Date> {
+public class ToDate implements Function<Object, Temporal> {
 
     @Override
-    public java.sql.Date execute(Evaluator evaluator, List<Object> args) {
+    public Temporal execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 1) {
-            throw new IllegalArgumentException("ToDate Function requires exactly one arguments.");
+            throw new IllegalArgumentException("ToDate Function requires exactly one argument.");
         }
 
         Object time1 = args.get(0);
@@ -26,17 +27,14 @@ public class ToDate implements Function<Object, java.sql.Date> {
             time1 = Utils.strToDate(String.valueOf(time1));
         }
 
-        if (time1 instanceof java.sql.Date) {
-            return (java.sql.Date) time1;
-        } else if (time1 instanceof java.sql.Timestamp) {
-            return new java.sql.Date(((java.sql.Timestamp) time1).getTime());
-        } else if (time1 instanceof LocalDateTime) {
-            LocalDateTime t1 = (LocalDateTime) time1;
-            Instant instant = t1.atZone(java.time.ZoneId.systemDefault()).toInstant();
-            return new java.sql.Date(instant.toEpochMilli());
-        } else {
-            throw new IllegalArgumentException("时间参数格式不对, 可选:[yyyy-MM-dd, yyyy-MM-dd HH:mm:ss]");
+        if (time1 instanceof LocalDate) {
+            return (LocalDate) time1;
         }
+
+        if (time1 instanceof LocalDateTime) {
+            return (LocalDateTime) time1;
+        }
+        throw new IllegalArgumentException("xxxxx");
     }
 
     @Override

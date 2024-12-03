@@ -1,11 +1,12 @@
 package com.zk.ruleengine;
 
 import com.alibaba.fastjson.JSON;
+import com.zk.ruleengine.utils.RuleExpressionParser;
 
-public class MainTest {
+public class ExpressionParserTest {
 
     public static void main(String[] args) {
-        MainTest testMain = new MainTest();
+        ExpressionParserTest testMain = new ExpressionParserTest();
         testMain.test0();
         testMain.test1();
         testMain.test2();

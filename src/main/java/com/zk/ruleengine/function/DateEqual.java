@@ -6,6 +6,7 @@ import com.zk.ruleengine.utils.Utils;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class DateEqual implements Function<Object, Boolean> {
         Object time1 = args.get(0);
         Object time2 = args.get(1);
 
+        if (!time1.getClass().equals(time2.getClass())) {
+            throw new IllegalArgumentException("[比较两个日期相等]操作参数类型不一致");
+        }
+
         // 字符串先转日期
         if (time1 instanceof String) {
             time1 = Utils.strToDate(String.valueOf(time1));
@@ -37,7 +42,11 @@ public class DateEqual implements Function<Object, Boolean> {
         }
 
         // 判断传入的日期时间类型
-        if (time1 instanceof LocalDateTime && time2 instanceof LocalDateTime) {
+        if (time1 instanceof LocalDate && time2 instanceof LocalDate) {
+            LocalDate t1 = (LocalDate) time1;
+            LocalDate t2 = (LocalDate) time2;
+            return t1.compareTo(t2) == 0;
+        } else if (time1 instanceof LocalDateTime && time2 instanceof LocalDateTime) {
             LocalDateTime t1 = (LocalDateTime) time1;
             LocalDateTime t2 = (LocalDateTime) time2;
             return t1.compareTo(t2) == 0;

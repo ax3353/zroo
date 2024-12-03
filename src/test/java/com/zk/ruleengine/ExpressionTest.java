@@ -94,5 +94,11 @@ public class ExpressionTest {
         System.out.println(exp8);
         Object eval8 = engine.execute(context, exp8);
         System.out.println(eval8);
+        System.out.println("------------------------------9");
+
+        String exp9 = "[\"if\",[\">\",[\"numberInput\",1],[\"numberInput\",0]],[\"if\",[\"<\",[\"numberInput\",3],[\"numberInput\",4]],[\"numberInput\",10],[\"numberInput\",20]],[\"numberInput\",30]]";
+        System.out.println(exp9);
+        Object eval9 = engine.execute(context, exp9);
+        System.out.println(eval9);
     }
 }
