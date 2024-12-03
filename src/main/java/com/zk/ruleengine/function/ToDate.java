@@ -10,7 +10,7 @@ import java.time.temporal.Temporal;
 import java.util.List;
 
 /**
- * 转yyyy-MM-dd格式的日期
+ * 转yyyy-MM-dd或yyyy-MM-dd HH:mm:ss格式的日期
  *
  * @author zk
  */
@@ -34,7 +34,7 @@ public class ToDate implements Function<Object, Temporal> {
         if (time1 instanceof LocalDateTime) {
             return (LocalDateTime) time1;
         }
-        throw new IllegalArgumentException("xxxxx");
+        throw new IllegalArgumentException("无法转换成日期: " + time1);
     }
 
     @Override
