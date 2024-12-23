@@ -102,8 +102,9 @@ public class ExpressionTest {
         System.out.println(exp9);
         Object eval9 = engine.execute(context, exp9);
         System.out.println(eval9);
+        System.out.println("------------------------------10");
 
-        String exp10 = "[\"if\",[\"&&\",[\"==\",[\"@value\",\"idx\"],[\"numberInput\",12]],[\"||\",[\"contains\",[\"@value\",\"ecode\"],[\"numberInput\",13]],[\"notContains\",[\"@value\",\"station_code\"],[\"numberInput\",14]]]],[\"strEq\",[\"@value\",\"hidden_danger_code\"],[\"numberInput\",13]],[\"notContains\",[\"@value\",\"station_name\"],[\"numberInput\",123]]]";
+        String exp10 = "[\"if\",[\"&&\",[\"==\",[\"@value\",\"idx\"],[\"numberInput\",12]],[\"||\",[\"contains\",[\"@value\",\"ecode\"],[\"strInput\",\"13\"]],[\"notContains\",[\"@value\",\"station_code\"],[\"strInput\",\"14\"]]]],[\"strEq\",[\"@value\",\"hidden_danger_code\"],[\"strInput\",\"13\"]],[\"notContains\",[\"@value\",\"station_name\"],[\"strInput\",\"123\"]]]";
         System.out.println(exp10);
         Object eval10 = engine.execute(context, exp10);
         System.out.println(eval10);

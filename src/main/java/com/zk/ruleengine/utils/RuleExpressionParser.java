@@ -1,10 +1,6 @@
 package com.zk.ruleengine.utils;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.*;
 
 /**
  * 将用户配置的规则脚本解析成规则表达式
@@ -72,13 +68,7 @@ public class RuleExpressionParser {
         OPERATOR_ARITY.put("if", 3);
     }
 
-    private static final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d+");
-    private static final Pattern DOUBLE_PATTERN = Pattern.compile("-?\\d+\\.\\d+");
-    private static final Pattern TIME_PATTERN = Pattern.compile("\\d{2}:\\d{2}:\\d{2}");
-    private static final Pattern DATE_PATTERN = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-    private static final Pattern DATE_TIME_PATTERN = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
-
-    public static Object parse(String[] tokens) {
+    public static Object parse(List<String> tokens) {
         Deque<Object> operandStack = new ArrayDeque<>();
         Deque<String> operatorStack = new ArrayDeque<>();
         int openParenthesesCount = 0;
@@ -88,7 +78,7 @@ public class RuleExpressionParser {
                 operatorStack.push("(");
                 openParenthesesCount++;
             } else if (token.equals(")")) {
-                handleCloseParenthesis(operandStack, operatorStack, openParenthesesCount);
+                handleCloseParen(operandStack, operatorStack, openParenthesesCount);
                 openParenthesesCount--;
             } else if (token.equals("if") || token.equals("then") || token.equals("else")) {
                 operatorStack.push(token);
@@ -110,14 +100,15 @@ public class RuleExpressionParser {
         return operandStack.pop();
     }
 
-    private static void handleCloseParenthesis(Deque<Object> operandStack, Deque<String> operatorStack, int openParenthesesCount) {
+    private static void handleCloseParen(Deque<Object> operandStack, Deque<String> operatorStack, int openParenthesesCount) {
         if (openParenthesesCount == 0) {
             throw new IllegalArgumentException("括号不匹配：多余的右括号");
         }
         while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
             processOperator(operandStack, operatorStack.pop());
         }
-        operatorStack.pop(); // 弹出左括号
+        // 弹出左括号
+        operatorStack.pop();
     }
 
     private static void processOperator(Deque<Object> operandStack, String operator) {
@@ -126,6 +117,10 @@ public class RuleExpressionParser {
         }
 
         if (operator.equals("if")) {
+            if (operandStack.size() < 3) {
+                throw new IllegalStateException("操作符[" + operator + "]不完整, 必须有then和else子句");
+            }
+
             handleIfThenElse(operandStack);
             return;
         }
@@ -158,20 +153,25 @@ public class RuleExpressionParser {
     private static Object parseValue(String token) {
         if (token.startsWith("@")) {
             return new Object[]{"@value", token.substring(1)};
-        } else if (INTEGER_PATTERN.matcher(token).matches()) {
+        } else if (token.startsWith("(&number)")) {
+            token = token.replace("(&number)", "");
             return new Object[]{"numberInput", Integer.parseInt(token)};
-        } else if (DOUBLE_PATTERN.matcher(token).matches()) {
-            return new Object[]{"numberInput", Double.parseDouble(token)};
-        } else if (TIME_PATTERN.matcher(token).matches()) {
+        } else if (token.startsWith("(&time)")) {
+            token = token.replace("(&time)", "");
             return new Object[]{"timeInput", token};
-        } else if (DATE_PATTERN.matcher(token).matches()) {
+        } else if (token.startsWith("(&date)")) {
+            token = token.replace("(&date)", "");
             return new Object[]{"dateInput", token};
-        } else if (DATE_TIME_PATTERN.matcher(token).matches()) {
+        } else if (token.startsWith("(&datetime)")) {
+            token = token.replace("(&datetime)", "");
             return new Object[]{"dateTimeInput", token};
         } else if ("&nowDate".equals(token)) {
             return new Object[]{"nowDate"};
         } else if ("&nowDateTime".equals(token)) {
             return new Object[]{"nowDateTime"};
+        } else if (token.startsWith("(&string)")) {
+            token = token.replace("(&string)", "");
+            return new Object[]{"strInput", token};
         } else {
             return new Object[]{"strInput", token};
         }

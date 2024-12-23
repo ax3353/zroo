@@ -3,6 +3,9 @@ package com.zk.ruleengine;
 import com.alibaba.fastjson.JSON;
 import com.zk.ruleengine.utils.RuleExpressionParser;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ExpressionParserTest {
 
     public static void main(String[] args) {
@@ -21,7 +24,8 @@ public class ExpressionParserTest {
                 "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
@@ -33,7 +37,8 @@ public class ExpressionParserTest {
                 "(", "@alarm_status", "==", "1", ")"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
@@ -45,7 +50,8 @@ public class ExpressionParserTest {
                 "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
@@ -59,7 +65,8 @@ public class ExpressionParserTest {
                 "else", "&nowDate", "date>", "2023-01-01"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
@@ -71,7 +78,8 @@ public class ExpressionParserTest {
                 "else", "&nowDate", "date>", "@createTime"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
@@ -81,19 +89,21 @@ public class ExpressionParserTest {
                 "&nowDate", "date>", "2023-01-01"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
 
     private void test6() {
         String[] tokens = {
-                "if", "(", "(", "@id", "==", "12", ")", "&&", "(", "(", "@ecode", "contains", "a13", ")", "||", "(", "@station_code", "notContains", "a14", ")", ")", ")",
-                "then", "(", "@hidden_danger_code", "eq", "a13", ")",
-                "else", "(", "@station_name", "notContains", "a123", ")"
+                "if", "(", "(", "@id", "==", "(&number)12", ")", "&&", "(", "(", "@ecode", "contains", "(&string)13", ")", "||", "(", "@station_code", "notContains", "(&string)14", ")", ")", ")",
+                "then", "(", "@hidden_danger_code", "strEq", "(&string)13", ")",
+                "else", "(", "@station_name", "notContains", "(&string)123", ")"
         };
 
-        Object result = RuleExpressionParser.parse(tokens);
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
