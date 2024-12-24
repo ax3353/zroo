@@ -31,6 +31,7 @@ public class ExpressionTest {
         context.put("report_time", "2024-11-20");
         context.put("nowDate", "2024-11-20");
         context.put("ecode", "130");
+        context.put("name", "12");
 
         System.out.println("------------------------------0");
 //        String exp = "[\"if\",[\"&&\",[\"strEq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"&&\",[\">=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",30]],[\"<=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",50]]]],[\"print\",\"执行操作A\"],[\"if\",[\"==\",[\"dayBetween\",[\"@value\",\"alarmTime\"],[\"@value\",\"createTime\"]]],[\"print\",\"执行操作B\"],[\"print\",\"没有满足任何条件时执行操作C\"]]]";
@@ -108,5 +109,11 @@ public class ExpressionTest {
         System.out.println(exp10);
         Object eval10 = engine.execute(context, exp10);
         System.out.println(eval10);
+        System.out.println("------------------------------11");
+
+        String exp11 = "[\"&&\",[\"strEq\",[\"@value\",\"name\"],[\"strInput\",\"12\"]],[\"||\",[\"strNeq\",[\"@value\",\"id\"],[\"strInput\",\"13\"]],[\"&&\",[\"contains\",[\"@value\",\"gid\"],[\"strInput\",\"14\"]],[\"||\",[\"notContains\",[\"@value\",\"ecode\"],[\"strInput\",\"15\"]],[\"contains\",[\"@value\",\"station_code\"],[\"strInput\",\"16\"]]]]]]";
+        System.out.println(exp11);
+        Object eval11 = engine.execute(context, exp11);
+        System.out.println(eval11);
     }
 }
