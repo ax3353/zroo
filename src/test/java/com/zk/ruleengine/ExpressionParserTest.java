@@ -16,7 +16,8 @@ public class ExpressionParserTest {
 //        testMain.test3();
 //        testMain.test4();
 //        testMain.test5();
-        testMain.test6();
+//        testMain.test6();
+        testMain.test7();
     }
 
     public void test0() {
@@ -100,6 +101,21 @@ public class ExpressionParserTest {
                 "if", "(", "(", "@id", "==", "(&number)12", ")", "&&", "(", "(", "@ecode", "contains", "(&string)13", ")", "||", "(", "@station_code", "notContains", "(&string)14", ")", ")", ")",
                 "then", "(", "@hidden_danger_code", "strEq", "(&string)13", ")",
                 "else", "(", "@station_name", "notContains", "(&string)123", ")"
+        };
+
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
+        String s = JSON.toJSONString(result);
+        System.out.println(s);
+    }
+
+    private void test7() {
+        String[] tokens = {
+                "if", "(", "(", "@gid", ">", "(&string)12", ")", "&&", "(", "(", "@ecode", "notContains", "(&string)13", ")", "||", "(", "@station_code", "contains", "(&string)14", ")", ")", ")",
+                "then", "(", "(", "leftSub", "@station_name", "(&number)3", ")", "strEq", "(&string)abc", ")",
+                "if", "(", "&nowDateTime", "date<", "(&datetime)2024-12-24 00:00:00", ")",
+                "then", "(", "(&string)aaaa", ")",
+                "else", "(", "(&string)bbbb", ")"
         };
 
         List<String> strings = Arrays.asList(tokens);

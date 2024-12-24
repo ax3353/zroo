@@ -71,15 +71,15 @@ public class RuleExpressionParser {
     public static Object parse(List<String> tokens) {
         Deque<Object> operandStack = new ArrayDeque<>();
         Deque<String> operatorStack = new ArrayDeque<>();
-        int openParenthesesCount = 0;
+        int openParenCount = 0;
 
         for (String token : tokens) {
             if (token.equals("(")) {
                 operatorStack.push("(");
-                openParenthesesCount++;
+                openParenCount++;
             } else if (token.equals(")")) {
-                handleCloseParen(operandStack, operatorStack, openParenthesesCount);
-                openParenthesesCount--;
+                handleCloseParen(operandStack, operatorStack, openParenCount);
+                openParenCount--;
             } else if (token.equals("if") || token.equals("then") || token.equals("else")) {
                 operatorStack.push(token);
             } else if (OPERATOR_ARITY.containsKey(token)) {
@@ -89,8 +89,8 @@ public class RuleExpressionParser {
             }
         }
 
-        if (openParenthesesCount != 0) {
-            throw new IllegalArgumentException("括号不匹配：缺少右括号，未闭合的左括号数量：" + openParenthesesCount);
+        if (openParenCount != 0) {
+            throw new IllegalArgumentException("括号不匹配：缺少右括号，未闭合的左括号数量：" + openParenCount);
         }
 
         while (!operatorStack.isEmpty()) {
@@ -100,8 +100,8 @@ public class RuleExpressionParser {
         return operandStack.pop();
     }
 
-    private static void handleCloseParen(Deque<Object> operandStack, Deque<String> operatorStack, int openParenthesesCount) {
-        if (openParenthesesCount == 0) {
+    private static void handleCloseParen(Deque<Object> operandStack, Deque<String> operatorStack, int openParenCount) {
+        if (openParenCount == 0) {
             throw new IllegalArgumentException("括号不匹配：多余的右括号");
         }
         while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
