@@ -59,9 +59,11 @@ public class ExpressionParserTest {
 
     private void test3() {
         String[] tokens = {
-                "if", "(", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")", "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")", ")",
+                "if", "(", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")",
+                "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")", ")",
                 "then", "(", "(", "@id", "+", "50", ")", "-", "(", "@danger_code", "*", "2", ")", ")",
-                "if", "(", "(", "(", "@id", "-", "10", ")", "<=", "(", "@danger_code", "*", "2", ")", ")", "||", "(", "@danger_status", "==", "0", ")", ")",
+                "if", "(", "(", "(", "@id", "-", "10", ")", "<=", "(", "@danger_code", "*", "2", ")", ")",
+                "||", "(", "@danger_status", "==", "0", ")", ")",
                 "then", "(", "abs", "(", "@id", "-", "100", ")", ")",
                 "else", "&nowDate", "date>", "2023-01-01"
         };
@@ -74,7 +76,8 @@ public class ExpressionParserTest {
 
     private void test4() {
         String[] tokens = {
-                "if", "(", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")", "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")", ")",
+                "if", "(", "(", "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")", ")",
+                "&&", "(", "(", "leftSub", "@danger_name", "2", ")", "strEq", "alarming", ")", ")",
                 "then", "(", "abs", "(", "@id", "-", "100", ")", ")",
                 "else", "&nowDate", "date>", "@createTime"
         };
@@ -98,7 +101,8 @@ public class ExpressionParserTest {
 
     private void test6() {
         String[] tokens = {
-                "if", "(", "(", "@id", "==", "(&number)12", ")", "&&", "(", "(", "@ecode", "contains", "(&string)13", ")", "||", "(", "@station_code", "notContains", "(&string)14", ")", ")", ")",
+                "if", "(", "(", "@id", "==", "(&number)12", ")", "&&", "(", "(", "@ecode", "contains", "(&string)13", ")",
+                "||", "(", "@station_code", "notContains", "(&string)14", ")", ")", ")",
                 "then", "(", "@hidden_danger_code", "strEq", "(&string)13", ")",
                 "else", "(", "@station_name", "notContains", "(&string)123", ")"
         };
@@ -111,7 +115,9 @@ public class ExpressionParserTest {
 
     private void test7() {
         String[] tokens = {
-                "if", "(", "(", "@gid", ">", "(&string)12", ")", "&&", "(", "(", "@ecode", "notContains", "(&string)13", ")", "||", "(", "@station_code", "contains", "(&string)14", ")", ")", ")",
+                "if", "(", "(", "@gid", ">", "(&string)12", ")",
+                "&&", "(", "(", "@ecode", "notContains", "(&string)13", ")",
+                "||", "(", "@station_code", "contains", "(&string)14", ")", ")", ")",
                 "then", "(", "(", "leftSub", "@station_name", "(&number)3", ")", "strEq", "(&string)abc", ")",
                 "if", "(", "&nowDateTime", "date<", "(&datetime)2024-12-24 00:00:00", ")",
                 "then", "(", "(&string)aaaa", ")",
