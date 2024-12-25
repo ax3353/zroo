@@ -10,19 +10,20 @@ public class ExpressionParserTest {
 
     public static void main(String[] args) {
         ExpressionParserTest testMain = new ExpressionParserTest();
-//        testMain.test0();
+        testMain.test0();
 //        testMain.test1();
 //        testMain.test2();
 //        testMain.test3();
 //        testMain.test4();
 //        testMain.test5();
 //        testMain.test6();
-        testMain.test7();
+//        testMain.test7();
+        testMain.test8();
     }
 
     public void test0() {
         String[] tokens = {
-                "(", "@id", "+", "50", ")", ">", "(", "@danger_code", "*", "2", ")"
+                "(", "@id", "+", "(&number)1.99", ")", ">", "(", "@danger_code", "*", "(&number)1", ")"
         };
 
         List<String> strings = Arrays.asList(tokens);
@@ -129,4 +130,16 @@ public class ExpressionParserTest {
         String s = JSON.toJSONString(result);
         System.out.println(s);
     }
+
+    private void test8() {
+        String[] tokens = {
+                "&nowDateTime", "date-", "(&number)1", "(&string)时 "
+        };
+
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
+        String s = JSON.toJSONString(result);
+        System.out.println(s);
+    }
+
 }

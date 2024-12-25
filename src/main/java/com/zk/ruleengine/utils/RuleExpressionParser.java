@@ -1,6 +1,7 @@
 package com.zk.ruleengine.utils;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 将用户配置的规则脚本解析成规则表达式
@@ -10,6 +11,8 @@ import java.util.*;
 public class RuleExpressionParser {
 
     private static final Map<String, Integer> OPERATOR_ARITY = new HashMap<>();
+
+    private static final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d+");
 
     static {
         // 一元操作符
@@ -49,8 +52,6 @@ public class RuleExpressionParser {
         OPERATOR_ARITY.put("leftSub", 2);
         OPERATOR_ARITY.put("rightSub", 2);
         OPERATOR_ARITY.put("midSub", 2);
-        OPERATOR_ARITY.put("date+", 2);
-        OPERATOR_ARITY.put("date-", 2);
         OPERATOR_ARITY.put("date<", 2);
         OPERATOR_ARITY.put("date>", 2);
         OPERATOR_ARITY.put("date>=", 2);
@@ -65,6 +66,8 @@ public class RuleExpressionParser {
         OPERATOR_ARITY.put("secondBetween", 2);
 
         // 三元操作符
+        OPERATOR_ARITY.put("date+", 3);
+        OPERATOR_ARITY.put("date-", 3);
         OPERATOR_ARITY.put("if", 3);
     }
 
@@ -155,7 +158,11 @@ public class RuleExpressionParser {
             return new Object[]{"@value", token.substring(1)};
         } else if (token.startsWith("(&number)")) {
             token = token.replace("(&number)", "");
-            return new Object[]{"numberInput", Integer.parseInt(token)};
+            if (INTEGER_PATTERN.matcher(token).matches()) {
+                return new Object[]{"numberInput", Integer.parseInt(token)};
+            } else {
+                return new Object[]{"numberInput", Double.parseDouble(token)};
+            }
         } else if (token.startsWith("(&time)")) {
             token = token.replace("(&time)", "");
             return new Object[]{"timeInput", token};

@@ -115,5 +115,10 @@ public class ExpressionTest {
         System.out.println(exp11);
         Object eval11 = engine.execute(context, exp11);
         System.out.println(eval11);
+
+        String exp12 = "[\"date-\",[\"nowDateTime\"],[\"numberInput\",1],[\"strInput\",\"时 \"]]";
+        System.out.println(exp12);
+        Object eval12 = engine.execute(context, exp12);
+        System.out.println(eval12);
     }
 }

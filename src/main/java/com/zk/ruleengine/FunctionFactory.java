@@ -65,6 +65,8 @@ public class FunctionFactory {
         register(new StrInput());
         register(new NumberInput());
         register(new TimeInput());
+        register(new DateAdd());
+        register(new DateSub());
         register(new DateInput());
         register(new DateTimeInput());
         register(new DateEqual());
