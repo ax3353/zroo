@@ -19,7 +19,8 @@ public class ExpressionParserTest {
 //        testMain.test6();
 //        testMain.test7();
 //        testMain.test8();
-        testMain.test9();
+//        testMain.test9();
+        testMain.test10();
     }
 
     public void test0() {
@@ -148,6 +149,17 @@ public class ExpressionParserTest {
                 "if", "(", "(", "@User_id", "%", "(&number)2", ")", "==", "(&number)0", ")",
                 "then", "(", "(&string)男", ")",
                 "else", "(", "(&string)女", ")"
+        };
+
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
+        String s = JSON.toJSONString(result);
+        System.out.println(s);
+    }
+
+    private void test10() {
+        String[] tokens = {
+                "(", "(", "@name", "<>", "(&number)12", ")", "&&", "(", "@id", ">=", "(&number)66", ")", ")", "||", "(", "(", "(", "@age", ">", "(&number)15", ")", "&&", "(", "@age", "<=", "(&number)45", ")", ")", "&&", "(", "(", "@em", "<=", "(&number)34", ")", "||", "(", "@em", ">", "(&number)89", ")", ")", ")"
         };
 
         List<String> strings = Arrays.asList(tokens);

@@ -32,6 +32,9 @@ public class ExpressionTest {
         context.put("nowDate", "2024-11-20");
         context.put("ecode", "130");
         context.put("name", "12");
+        context.put("namex", 12);
+        context.put("age", 20);
+        context.put("em", 10);
 
         System.out.println("------------------------------0");
 //        String exp = "[\"if\",[\"&&\",[\"strEq\",[\"@value\",\"deviceName\"],[\"strInput\",\"河庄门店\"]],[\"&&\",[\">=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",30]],[\"<=\",[\"*\",[\"@value\",\"pressure\"],[\"numberInput\",5]],[\"numberInput\",50]]]],[\"print\",\"执行操作A\"],[\"if\",[\"==\",[\"dayBetween\",[\"@value\",\"alarmTime\"],[\"@value\",\"createTime\"]]],[\"print\",\"执行操作B\"],[\"print\",\"没有满足任何条件时执行操作C\"]]]";
@@ -115,10 +118,17 @@ public class ExpressionTest {
         System.out.println(exp11);
         Object eval11 = engine.execute(context, exp11);
         System.out.println(eval11);
+        System.out.println("------------------------------12");
 
-        String exp12 = "[\"date-\",[\"nowDateTime\"],[\"numberInput\",1],[\"strInput\",\"时 \"]]";
+        String exp12 = "[\"date-\",[\"nowDateTime\"],[\"numberInput\",1],[\"strInput\",\"dayUnit\"]]";
         System.out.println(exp12);
         Object eval12 = engine.execute(context, exp12);
         System.out.println(eval12);
+        System.out.println("------------------------------13");
+
+        String exp13 = "[\"||\",[\"&&\",[\"<>\",[\"@value\",\"namex\"],[\"numberInput\",12]],[\">=\",[\"@value\",\"idx\"],[\"numberInput\",66]]],[\"&&\",[\"&&\",[\">\",[\"@value\",\"age\"],[\"numberInput\",15]],[\"<=\",[\"@value\",\"age\"],[\"numberInput\",45]]],[\"||\",[\"<=\",[\"@value\",\"em\"],[\"numberInput\",34]],[\">\",[\"@value\",\"em\"],[\"numberInput\",89]]]]]";
+        System.out.println(exp13);
+        Object eval13 = engine.execute(context, exp13);
+        System.out.println(eval13);
     }
 }
