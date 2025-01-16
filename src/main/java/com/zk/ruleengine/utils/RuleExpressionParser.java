@@ -39,6 +39,7 @@ public class RuleExpressionParser {
         OPERATOR_ARITY.put("-", 2);
         OPERATOR_ARITY.put("*", 2);
         OPERATOR_ARITY.put("/", 2);
+        OPERATOR_ARITY.put("%", 2);
         OPERATOR_ARITY.put(">", 2);
         OPERATOR_ARITY.put("<", 2);
         OPERATOR_ARITY.put("==", 2);
