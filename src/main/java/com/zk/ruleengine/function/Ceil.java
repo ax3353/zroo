@@ -9,17 +9,18 @@ import java.util.List;
 
 /**
  * 向上取整
+ *
  * @author zk
  */
-public class Ceil implements Function<Number, Number> {
+public class Ceil extends NumberConvert implements Function<Object, Number> {
 
     @Override
-    public Number execute(Evaluator evaluator, List<Number> args) {
+    public Number execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 1) {
             throw new IllegalArgumentException("CeilFunction requires exactly one argument.");
         }
 
-        BigDecimal number = BigDecimal.valueOf(args.get(0).doubleValue());
+        BigDecimal number = this.convert(evaluator, args.get(0));
         return number.setScale(0, RoundingMode.UP);
     }
 

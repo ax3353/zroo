@@ -31,13 +31,6 @@ public final class RuleEngine {
     }
 
     /**
-     * 注册自定义的OperatorPolicy
-     */
-    public void registerOperatorPolicy(OperatorPolicy policy) {
-        OperatorPolicyFactory.register(policy);
-    }
-
-    /**
      * 执行规则
      *
      * @param context        执行所需要的参数上下文

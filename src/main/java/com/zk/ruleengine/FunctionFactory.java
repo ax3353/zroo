@@ -44,6 +44,7 @@ public class FunctionFactory {
         register(new Subtract());
         register(new Multiply());
         register(new Divide());
+        register(new Mod());
         register(new Abs());
         register(new Ceil());
         register(new Floor());

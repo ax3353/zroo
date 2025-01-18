@@ -8,17 +8,18 @@ import java.util.List;
 
 /**
  * 取绝对值
+ *
  * @author zk
  */
-public class Abs implements Function<Number, Number> {
+public class Abs extends NumberConvert implements Function<Object, Number> {
 
     @Override
-    public Number execute(Evaluator evaluator, List<Number> args) {
+    public Number execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 1) {
             throw new IllegalArgumentException("Abs Function requires exactly one argument.");
         }
 
-        Number number = args.get(0);
+        Object number = args.get(0);
         if (number instanceof Integer) {
             return Math.abs((Integer) number);
         }
@@ -34,7 +35,8 @@ public class Abs implements Function<Number, Number> {
         if (number instanceof BigDecimal) {
             return ((BigDecimal) number).abs();
         }
-        throw new IllegalArgumentException("Abs Function parameter must be of type Number.");
+        BigDecimal decimal = this.convert(evaluator, number);
+        return decimal.abs();
     }
 
     @Override

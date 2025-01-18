@@ -44,5 +44,15 @@ public class FunctionTest {
         Function<String, Object> nowFunction = FunctionFactory.getFunction("nowDate");
         Object execute5 = nowFunction.execute(evaluator, null);
         System.out.println(execute5);
+
+        List<Object> numNotEqParam = Arrays.asList("1.00", 1.000000001);
+        Function<Object, Boolean> numNotEq = FunctionFactory.getFunction("<>");
+        boolean numNotEqRt = numNotEq.execute(evaluator, numNotEqParam);
+        System.out.println("numNotEq Operation Result: " + numNotEqRt);
+
+        List<Object> gtOrEqParam = Arrays.asList("1.0000000010", 1.000000001);
+        Function<Object, Boolean> gtOrEq = FunctionFactory.getFunction(">=");
+        boolean gtOrEqParamRt = gtOrEq.execute(evaluator, gtOrEqParam);
+        System.out.println("gtOrEq Operation Result: " + gtOrEqParamRt);
     }
 }

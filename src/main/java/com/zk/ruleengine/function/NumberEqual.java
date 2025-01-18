@@ -3,6 +3,8 @@ package com.zk.ruleengine.function;
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  *
  * @author zk
  */
-public class NumberEqual implements Function<Object, Boolean> {
+public class NumberEqual extends NumberConvert implements Function<Object, Boolean> {
 
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {
@@ -19,24 +21,14 @@ public class NumberEqual implements Function<Object, Boolean> {
             throw new IllegalArgumentException("NumberEqualsFunction requires exactly two arguments.");
         }
 
-        for (Object arg : args) {
-            if (!(arg instanceof Number)) {
-                throw new IllegalArgumentException("[数字比较操作]必须是数字类型");
-            }
-        }
+        BigDecimal first = convert(evaluator, args.get(0));
+        BigDecimal second = convert(evaluator, args.get(1));
 
-        Number first = (Number) args.get(0);
-        Number second = (Number) args.get(1);
-
-        // 处理浮点数比较的精度问题
-        if (first instanceof Double || first instanceof Float || second instanceof Double || second instanceof Float) {
-            double diff = Math.abs(first.doubleValue() - second.doubleValue());
-            double tolerance = 0.000001;
-            return diff < tolerance;
-        } else {
-            // 对于整数，直接比较
-            return first.longValue() == second.longValue();
-        }
+        // 确定两个 BigDecimal 值的最大精度
+        int scale = Math.max(first.scale(), second.scale());
+        BigDecimal firstScaled = first.setScale(scale, RoundingMode.HALF_UP);
+        BigDecimal secondScaled = second.setScale(scale, RoundingMode.HALF_UP);
+        return firstScaled.compareTo(secondScaled) == 0;
     }
 
     @Override

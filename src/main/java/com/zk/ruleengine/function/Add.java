@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author zk
  */
-public class Add implements Function<Object, Number> {
+public class Add extends NumberConvert implements Function<Object, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
@@ -28,7 +28,7 @@ public class Add implements Function<Object, Number> {
                 throw new IllegalArgumentException("[加法函数]不支持的参数类型: null");
             }
 
-            BigDecimal value = parseToBigDecimal(arg);
+            BigDecimal value = convert(evaluator, arg);
             result = result.add(value);
 
             if (value.scale() > 0) {
@@ -52,26 +52,5 @@ public class Add implements Function<Object, Number> {
     @Override
     public String name() {
         return "+";
-    }
-
-    /**
-     * 将参数解析为 BigDecimal
-     */
-    private BigDecimal parseToBigDecimal(Object arg) {
-        if (arg instanceof Integer || arg instanceof Long) {
-            return BigDecimal.valueOf(((Number) arg).longValue());
-        } else if (arg instanceof Double || arg instanceof Float) {
-            return BigDecimal.valueOf(((Number) arg).doubleValue());
-        } else if (arg instanceof BigDecimal) {
-            return (BigDecimal) arg;
-        } else if (arg instanceof String) {
-            try {
-                return new BigDecimal((String) arg);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("[加法函数]无效的数值: " + arg);
-            }
-        } else {
-            throw new IllegalArgumentException("[加法函数]不支持的参数类型: " + arg.getClass().getName());
-        }
     }
 }
