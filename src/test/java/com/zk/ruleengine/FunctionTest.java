@@ -11,6 +11,11 @@ public class FunctionTest {
     public static void main(String[] args) {
         Evaluator evaluator = new Evaluator(new HashMap<>());
 
+        List<Object> rule0 = Collections.singletonList("aa");
+        Function<Object, Boolean> notNull = FunctionFactory.getFunction("notBlank");
+        Boolean notNullRt = notNull.execute(evaluator, rule0);
+        System.out.println("notNull Operation Result: " + notNullRt);
+
         List<Double> rule = Collections.singletonList(2.0);
         Function<Double, String> operation = FunctionFactory.getFunction("toStr");
         String result = operation.execute(evaluator, rule);
