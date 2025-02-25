@@ -7,30 +7,18 @@ import java.util.List;
 
 /**
  * 数值输入(eg: 123 或 123.45)
+ *
  * @author zk
  */
-public class NumberInput implements Function<Object, Number> {
+public class NumberInput extends NumberConvert implements Function<Object, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
-        if (args.isEmpty()) {
-            throw new IllegalArgumentException("IntInputFunction requires at least one argument.");
+        if (args.size() != 1) {
+            throw new IllegalArgumentException("[数值输入]操作仅支持一个参数");
         }
 
-        Number number;
-        Object o = args.get(0);
-        if (o instanceof String) {
-            try {
-                number = Integer.parseInt((String) o);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("[数值输入操作]的参数类型不对");
-            }
-        } else if (o instanceof Number) {
-            number = (Number) o;
-        } else {
-            throw new IllegalArgumentException("[数值输入操作]的参数类型不对");
-        }
-        return number;
+        return this.convert(evaluator, args.get(0));
     }
 
     @Override

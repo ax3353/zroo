@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author zk
  */
-public class Divide implements Function<Object, Number> {
+public class Divide extends NumberConvert implements Function<Object, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
@@ -20,7 +20,7 @@ public class Divide implements Function<Object, Number> {
             throw new IllegalArgumentException("[除法函数]至少有两个参数");
         }
 
-        BigDecimal result = parseToBigDecimal(args.get(0));
+        BigDecimal result = this.convert(evaluator, args.get(0));
         boolean isInteger = true;
 
         for (int i = 1; i < args.size(); i++) {
@@ -29,7 +29,7 @@ public class Divide implements Function<Object, Number> {
                 throw new IllegalArgumentException("[除法函数]不支持的参数类型: null");
             }
 
-            BigDecimal divisor = parseToBigDecimal(arg);
+            BigDecimal divisor = this.convert(evaluator, arg);
             if (divisor.compareTo(BigDecimal.ZERO) == 0) {
                 throw new ArithmeticException("[除法函数]除数不能为0");
             }
@@ -55,26 +55,5 @@ public class Divide implements Function<Object, Number> {
     @Override
     public String name() {
         return "/";
-    }
-
-    /**
-     * 将参数解析为 BigDecimal
-     */
-    private BigDecimal parseToBigDecimal(Object arg) {
-        if (arg instanceof Integer || arg instanceof Long) {
-            return BigDecimal.valueOf(((Number) arg).longValue());
-        } else if (arg instanceof Double || arg instanceof Float) {
-            return BigDecimal.valueOf(((Number) arg).doubleValue());
-        } else if (arg instanceof BigDecimal) {
-            return (BigDecimal) arg;
-        } else if (arg instanceof String) {
-            try {
-                return new BigDecimal((String) arg);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("[除法函数]无效的数值: " + arg);
-            }
-        } else {
-            throw new IllegalArgumentException("[除法函数]不支持的参数类型: " + arg.getClass().getName());
-        }
     }
 }

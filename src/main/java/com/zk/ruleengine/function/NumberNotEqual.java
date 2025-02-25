@@ -18,7 +18,7 @@ public class NumberNotEqual extends NumberConvert implements Function<Object, Bo
     @Override
     public Boolean execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 2) {
-            throw new IllegalArgumentException("NumberEqualsFunction requires exactly two arguments.");
+            throw new IllegalArgumentException("[数值不等于]操作需要两个参数");
         }
 
         // 确定两个 BigDecimal 值的最大精度

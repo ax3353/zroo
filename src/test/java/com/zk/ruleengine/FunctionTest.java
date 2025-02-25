@@ -59,5 +59,10 @@ public class FunctionTest {
         Function<Object, Boolean> gtOrEq = FunctionFactory.getFunction(">=");
         boolean gtOrEqParamRt = gtOrEq.execute(evaluator, gtOrEqParam);
         System.out.println("gtOrEq Operation Result: " + gtOrEqParamRt);
+
+        List<Object> numberInputParam = Collections.singletonList("100000.101");
+        Function<Object, Number> numberInput = FunctionFactory.getFunction("numberInput");
+        Number numberInputRt = numberInput.execute(evaluator, numberInputParam);
+        System.out.println("numberInput Operation Result: " + numberInputRt);
     }
 }

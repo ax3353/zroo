@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 数值比较处理
+ * 数值转换
  *
  * @author zk
  */
