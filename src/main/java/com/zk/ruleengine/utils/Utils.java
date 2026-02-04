@@ -2,6 +2,7 @@ package com.zk.ruleengine.utils;
 
 import lombok.SneakyThrows;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -50,5 +51,115 @@ public class Utils {
     public static boolean validDateFormat(String input, Pattern pattern) {
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
+    }
+
+    /**
+     * 安全地将 Object 转换为 int
+     */
+    public static int toInt(Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException("Cannot convert null to int");
+        }
+
+        if (obj instanceof Number) {
+            return ((Number) obj).intValue();
+        }
+
+        if (obj instanceof String) {
+            try {
+                return Integer.parseInt((String) obj);
+            } catch (NumberFormatException e) {
+                // 尝试通过 BigDecimal 转换
+                return new BigDecimal((String) obj).intValue();
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot convert " + obj.getClass() + " to int");
+    }
+
+    /**
+     * 安全地将 Object 转换为 long
+     */
+    public static long toLong(Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException("Cannot convert null to long");
+        }
+
+        if (obj instanceof Number) {
+            return ((Number) obj).longValue();
+        }
+
+        if (obj instanceof String) {
+            try {
+                return Long.parseLong((String) obj);
+            } catch (NumberFormatException e) {
+                return new BigDecimal((String) obj).longValue();
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot convert " + obj.getClass() + " to long");
+    }
+
+    /**
+     * 安全地将 Object 转换为 double
+     */
+    public static double toDouble(Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException("Cannot convert null to double");
+        }
+
+        if (obj instanceof Number) {
+            return ((Number) obj).doubleValue();
+        }
+
+        if (obj instanceof String) {
+            return Double.parseDouble((String) obj);
+        }
+
+        throw new IllegalArgumentException("Cannot convert " + obj.getClass() + " to double");
+    }
+
+    /**
+     * 安全地将 Object 转换为 BigDecimal
+     */
+    public static BigDecimal toBigDecimal(Object obj) {
+        if (obj == null) {
+            throw new IllegalArgumentException("Cannot convert null to BigDecimal");
+        }
+
+        if (obj instanceof BigDecimal) {
+            return (BigDecimal) obj;
+        }
+
+        if (obj instanceof Number) {
+            return new BigDecimal(obj.toString());
+        }
+
+        if (obj instanceof String) {
+            return new BigDecimal((String) obj);
+        }
+
+        throw new IllegalArgumentException("Cannot convert " + obj.getClass() + " to BigDecimal");
+    }
+
+    /**
+     * 检查是否为整数（没有小数部分）
+     */
+    public static boolean isInteger(Number number) {
+        if (number instanceof Integer || number instanceof Long) {
+            return true;
+        }
+
+        if (number instanceof BigDecimal) {
+            BigDecimal bd = (BigDecimal) number;
+            return bd.scale() <= 0 || bd.stripTrailingZeros().scale() <= 0;
+        }
+
+        if (number instanceof Double || number instanceof Float) {
+            double d = number.doubleValue();
+            return d == Math.floor(d) && !Double.isInfinite(d);
+        }
+
+        return false;
     }
 }

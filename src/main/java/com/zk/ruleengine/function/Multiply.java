@@ -42,10 +42,12 @@ public class Multiply extends NumberConvert implements Function<Object, Number> 
 
         // 根据结果类型返回适当的Number类型
         if (isInteger) {
-            return (result.longValueExact() <= Integer.MAX_VALUE
-                    && result.longValueExact() >= Integer.MIN_VALUE)
-                    ? result.intValue()
-                    : result.longValue();
+            long longVal = result.longValueExact();
+            if (longVal <= Integer.MAX_VALUE && longVal >= Integer.MIN_VALUE) {
+                return result.intValue();
+            } else {
+                return result.longValue();
+            }
         } else {
             return result.stripTrailingZeros();
         }

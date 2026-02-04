@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 取模运算，支持多个参数连除(eg: a % b % c)
+ * 取模运算，支持多个参数连取(eg: a % b % c)
  *
  * @author zk
  */

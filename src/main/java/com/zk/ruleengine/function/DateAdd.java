@@ -30,7 +30,11 @@ public class DateAdd implements Function<Object, Object> {
         Object add = args.get(1);
         Object unit = args.get(2);
 
-        if (!(add instanceof Integer)) {
+        if (!(add instanceof Number)) {
+            throw new IllegalArgumentException("[日期时间加法运算]操作的增加值必须是数字");
+        }
+
+        if (!Utils.isInteger((Number) add)) {
             throw new IllegalArgumentException("[日期时间加法运算]操作的增加值必须是整数");
         }
 
@@ -43,7 +47,7 @@ public class DateAdd implements Function<Object, Object> {
             time = Utils.strToDate(String.valueOf(time));
         }
 
-        long toAdd = (int) add;
+        long toAdd = ((Number) add).longValue();
         String timeUnit = (String) unit;
 
         // 判断传入的日期时间类型

@@ -22,6 +22,7 @@ public class ExpressionParserTest {
 //        testMain.test9();
         testMain.test10();
         testMain.test11();
+        testMain.test12();
     }
 
     public void test0() {
@@ -136,7 +137,7 @@ public class ExpressionParserTest {
 
     private void test8() {
         String[] tokens = {
-                "&nowDateTime", "date-", "(&number)1", "(&string)时 "
+                "&nowDateTime", "date-", "(&number)1", "(&string)hourUnit"
         };
 
         List<String> strings = Arrays.asList(tokens);
@@ -172,6 +173,17 @@ public class ExpressionParserTest {
     private void test11() {
         String[] tokens = {
                 "(", "notNull", "@id1", ")", "&&", "(", "notBlank", "@name1", ")"
+        };
+
+        List<String> strings = Arrays.asList(tokens);
+        Object result = RuleExpressionParser.parse(strings);
+        String s = JSON.toJSONString(result);
+        System.out.println(s);
+    }
+
+    private void test12() {
+        String[] tokens = {
+                "if", "(", "(", "@gid", ">", "(&string)12", ")", "&&", "(", "(", "@ecode", "notContains", "(&string)13", ")", "||", "(", "@station_code", "contains", "(&string)14", ")", ")", ")", "then", "(", "(", "leftSub", "@station_name", "(&number)3", ")", "strEq", "(&string)abc", ")", "else", "(", "&nowDateTime", "date-", "(&number)2", "hourUnit", ")"
         };
 
         List<String> strings = Arrays.asList(tokens);

@@ -40,10 +40,12 @@ public class Add extends NumberConvert implements Function<Object, Number> {
         result = result.setScale(5, RoundingMode.HALF_EVEN);
 
         if (isInteger) {
-            return (result.longValueExact() <= Integer.MAX_VALUE
-                    && result.longValueExact() >= Integer.MIN_VALUE)
-                    ? result.intValue()
-                    : result.longValue();
+            long longVal = result.longValueExact();
+            if (longVal <= Integer.MAX_VALUE && longVal >= Integer.MIN_VALUE) {
+                return result.intValue();
+            } else {
+                return result.longValue();
+            }
         } else {
             return result.stripTrailingZeros();
         }

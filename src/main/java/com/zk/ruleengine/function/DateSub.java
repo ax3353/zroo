@@ -30,8 +30,12 @@ public class DateSub implements Function<Object, Object> {
         Object add = args.get(1);
         Object unit = args.get(2);
 
-        if (!(add instanceof Integer)) {
-            throw new IllegalArgumentException("[日期时间减法运算]操作的减小值必须是整数");
+        if (!(add instanceof Number)) {
+            throw new IllegalArgumentException("[日期时间加法运算]操作的增加值必须是数字");
+        }
+
+        if (!Utils.isInteger((Number) add)) {
+            throw new IllegalArgumentException("[日期时间加法运算]操作的增加值必须是整数");
         }
 
         if (!(unit instanceof String)) {
@@ -43,14 +47,14 @@ public class DateSub implements Function<Object, Object> {
             time = Utils.strToDate(String.valueOf(time));
         }
 
-        long toAdd = -(int) add;
+        long toAdd = -((Number) add).longValue();
         String timeUnit = (String) unit;
 
         // 判断传入的日期时间类型
         if (time instanceof LocalDate) {
             LocalDate t1 = (LocalDate) time;
             if (!"dayUnit".equals(timeUnit)) {
-                throw new IllegalArgumentException("[日期时间减法运算]LocalDate类型未知的时间单位");
+                throw new IllegalArgumentException("[日期时间减法运算]仅支持'天'单位");
             }
             return t1.plusDays(toAdd);
         } else if (time instanceof LocalDateTime) {
@@ -70,7 +74,7 @@ public class DateSub implements Function<Object, Object> {
         } else if (time instanceof java.sql.Date) {
             java.sql.Date t1 = (java.sql.Date) time;
             if (!"dayUnit".equals(timeUnit)) {
-                throw new IllegalArgumentException("[日期时间减法运算]LocalDate类型未知的时间单位");
+                throw new IllegalArgumentException("[日期时间减法运算]仅支持'天'单位");
             }
             return new java.sql.Date(t1.getTime() + toAdd * 24 * 60 * 60 * 1000);
         } else if (time instanceof Time) {

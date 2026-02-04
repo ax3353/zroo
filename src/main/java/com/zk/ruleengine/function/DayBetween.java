@@ -3,7 +3,6 @@ package com.zk.ruleengine.function;
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,12 +12,13 @@ import java.util.List;
 /**
  * 计算两个日期之间的天数差。
  * 参数为两个日期或日期时间字符串或LocalDateTime对象，返回两个日期之间的天数差
+ *
  * @author zk
  */
-public class DayBetween implements Function<Object, BigDecimal> {
+public class DayBetween implements Function<Object, Long> {
 
     @Override
-    public BigDecimal execute(Evaluator evaluator, List<Object> args) {
+    public Long execute(Evaluator evaluator, List<Object> args) {
         if (args.size() != 2) {
             throw new IllegalArgumentException("DateBetweenFunction requires exactly two arguments.");
         }
@@ -33,7 +33,7 @@ public class DayBetween implements Function<Object, BigDecimal> {
 
         // 计算两个 LocalDateTime 之间的差值
         Duration duration = Duration.between(localDateTime1, localDateTime2);
-        return BigDecimal.valueOf(Math.abs(duration.toDays()));
+        return Math.abs(duration.toDays());
     }
 
     private Temporal ensureLocalDateTime(Object dateTime) {

@@ -2,6 +2,7 @@ package com.zk.ruleengine.function;
 
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
+import com.zk.ruleengine.utils.Utils;
 
 import java.util.List;
 
@@ -17,20 +18,8 @@ public class RightSub implements Function<Object, String> {
             throw new IllegalArgumentException("RightSubFunction requires exactly two arguments.");
         }
 
-        int length;
         String inputString = (String) args.get(0);
-        Object o = args.get(1);
-        if (o instanceof String) {
-            try {
-                length = Integer.parseInt((String) o);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("[右截取操作]的截取长度参数类型不对");
-            }
-        } else if (o instanceof Number) {
-            length = (int) o;
-        } else {
-            throw new IllegalArgumentException("[右截取操作]的截取长度参数类型不对");
-        }
+        int length = Utils.toInt(args.get(1));
 
         if (length < 0) {
             throw new IllegalArgumentException("Length must be non-negative.");
