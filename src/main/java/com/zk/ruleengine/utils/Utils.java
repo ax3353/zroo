@@ -1,9 +1,8 @@
 package com.zk.ruleengine.utils;
 
-import lombok.SneakyThrows;
-
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,11 +30,14 @@ public class Utils {
     /**
      * 时间转日期
      */
-    @SneakyThrows
     public static Object strToDate(String dateTimeStr) {
         if (validDateFormat(dateTimeStr, TIME_PATTERN)) {
-            java.util.Date date = new SimpleDateFormat("HH:mm:ss").parse(dateTimeStr);
-            return new Time(date.getTime());
+            try {
+                java.util.Date date = new SimpleDateFormat("HH:mm:ss").parse(dateTimeStr);
+                return new Time(date.getTime());
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("时间参数格式不对, 可选:[HH:mm:ss, yyyy-MM-dd, yyyy-MM-dd HH:mm:ss]");
+            }
         } else if (validDateFormat(dateTimeStr, DATE_PATTERN)) {
             return LocalDate.parse(dateTimeStr, FORMATTER0);
         } else if (validDateFormat(dateTimeStr, DATE_TIME_PATTERN)) {

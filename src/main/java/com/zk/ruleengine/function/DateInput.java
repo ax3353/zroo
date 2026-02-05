@@ -2,7 +2,6 @@ package com.zk.ruleengine.function;
 
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
-import lombok.SneakyThrows;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +21,6 @@ public class DateInput implements Function<String, LocalDate> {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
-    @SneakyThrows
     public LocalDate execute(Evaluator evaluator, List<String> args) {
         if (args.size() != 1) {
             throw new IllegalArgumentException("DateInput Function requires exactly one arguments.");

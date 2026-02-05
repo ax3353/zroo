@@ -2,7 +2,6 @@ package com.zk.ruleengine.function;
 
 import com.zk.ruleengine.Evaluator;
 import com.zk.ruleengine.Function;
-import lombok.SneakyThrows;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +23,6 @@ public class TimeInput implements Function<String, LocalTime> {
             DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
-    @SneakyThrows
     public LocalTime execute(Evaluator evaluator, List<String> args) {
         if (args == null || args.size() != 1) {
             throw new IllegalArgumentException("TimeInput Function requires exactly one argument.");

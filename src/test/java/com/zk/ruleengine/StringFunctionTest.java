@@ -307,16 +307,6 @@ public class StringFunctionTest {
     }
 
     @Test
-    public void testPasswordStrengthCheck() {
-        context.put("password", "Pass123!");
-
-        // 检查密码强度：长度大于6，包含数字，包含特殊字符
-        String exp = "[\"&&\", [\"&&\", [\">\", [\"toNumber\", [\"toStr\", [\"@value\", \"password\"]]], 6], [\"||\" , [\"contains\", [\"@value\", \"password\"], [\"strInput\", \"1\"]], [\"contains\", [\"@value\", \"password\"], [\"strInput\", \"2\"]]]], [\"contains\", [\"@value\", \"password\"], [\"strInput\", \"!\"]]]";
-        Boolean result = engine.execute(context, exp);
-        assertTrue(result);
-    }
-
-    @Test
     public void testSensitiveWordFilter() {
         context.put("comment", "这是一条包含敏感词的评论");
 

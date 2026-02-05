@@ -1,7 +1,5 @@
 package com.zk.ruleengine;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.Map;
  * 规则表达式会被其评估，通过一个递归由内向外评估
  * @author zk
  */
-@Getter
 public class Evaluator {
 
     private final Map<String, Object> context;
@@ -42,4 +39,7 @@ public class Evaluator {
         }
     }
 
+    public Map<String, Object> getContext() {
+        return context;
+    }
 }
