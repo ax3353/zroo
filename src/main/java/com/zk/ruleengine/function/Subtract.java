@@ -16,7 +16,7 @@ public class Subtract extends NumberConvert implements Function<Object, Number> 
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
-        if (args.isEmpty()) {
+        if (args.size() < 2) {
             throw new IllegalArgumentException("[减法函数]至少有两个参数");
         }
 

@@ -922,10 +922,10 @@ public class NumberFunctionsTest {
     }
 
     @Test
-    public void testMod_LargeNumbers() {
-        String exp = "[\"%\", 1000000, 7]";
-        Number result = engine.execute(context, exp);
-        assertEquals(6, result.intValue());
+    public void testMod_Double() {
+        String exp = "[\"%\", 10.5, 3]";
+        BigDecimal result = engine.execute(context, exp);
+        assertEquals(1.5d, result.doubleValue(), 0.0001);
     }
 
     @Test

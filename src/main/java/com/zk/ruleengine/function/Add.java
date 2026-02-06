@@ -16,7 +16,7 @@ public class Add extends NumberConvert implements Function<Object, Number> {
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
-        if (args.isEmpty()) {
+        if (args.size() < 2) {
             throw new IllegalArgumentException("[加法函数]至少有两个参数");
         }
 
@@ -37,7 +37,7 @@ public class Add extends NumberConvert implements Function<Object, Number> {
         }
 
         // 设置精度
-        result = result.setScale(5, RoundingMode.HALF_EVEN);
+        result = result.setScale(10, RoundingMode.HALF_EVEN);
 
         if (isInteger) {
             long longVal = result.longValueExact();

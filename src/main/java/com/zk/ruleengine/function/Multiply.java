@@ -16,7 +16,7 @@ public class Multiply extends NumberConvert implements Function<Object, Number> 
 
     @Override
     public Number execute(Evaluator evaluator, List<Object> args) {
-        if (args.isEmpty()) {
+        if (args.size() < 2) {
             throw new IllegalArgumentException("[乘法函数]至少有两个参数");
         }
 
@@ -38,19 +38,32 @@ public class Multiply extends NumberConvert implements Function<Object, Number> 
         }
 
         // 设置精度
-        result = result.setScale(5, RoundingMode.HALF_EVEN);
+        result = result.setScale(10, RoundingMode.HALF_EVEN);
 
-        // 根据结果类型返回适当的Number类型
         if (isInteger) {
-            long longVal = result.longValueExact();
-            if (longVal <= Integer.MAX_VALUE && longVal >= Integer.MIN_VALUE) {
-                return result.intValue();
-            } else {
-                return result.longValue();
+            // 去除尾部零，避免 .00000 的影响
+            result = result.stripTrailingZeros();
+
+            // 检查是否确实是整数（没有小数部分）
+            if (result.scale() <= 0) {
+                try {
+                    long longValue = result.longValueExact();
+
+                    // 判断是否在 Integer 范围内
+                    if (longValue >= Integer.MIN_VALUE && longValue <= Integer.MAX_VALUE) {
+                        return (int) longValue;
+                    } else {
+                        return longValue;
+                    }
+                } catch (ArithmeticException e) {
+                    // 如果 longValueExact 失败，返回 BigDecimal
+                    return result;
+                }
             }
-        } else {
-            return result.stripTrailingZeros();
         }
+
+        // 返回 BigDecimal（有小数部分）
+        return result.stripTrailingZeros();
     }
 
     @Override
