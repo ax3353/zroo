@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,6 +159,26 @@ public class DateTimeFunctionTest {
         String exp = "[\"date-\", [\"dateInput\", \"2025-01-01\"], 1, [\"strInput\", \"yearUnit\"]]";
         LocalDate result = engine.execute(context, exp);
         assertEquals(LocalDate.of(2024, 1, 1), result);
+    }
+
+    @Test
+    public void testUtilDateSubtractYears() {
+        context.put("currentDate", new Date(1770343200000L));
+
+        // 2026-02-06 10:00:00 - 1年 = 2025-02-06 10:00:00
+        String exp = "[\"date-\", [\"@value\", \"currentDate\"], 1, [\"strInput\", \"yearUnit\"]]";
+        Date result = engine.execute(context, exp);
+        assertEquals(new Date(1738807200000L), result);
+    }
+
+    @Test
+    public void testSqlDateSubtractYears() {
+        context.put("currentDate", new java.sql.Date(1770307200000L));
+
+        // 2026-02-06 - 1年 = 2025-02-06
+        String exp = "[\"date-\", [\"@value\", \"currentDate\"], 1, [\"strInput\", \"yearUnit\"]]";
+        java.sql.Date result = engine.execute(context, exp);
+        assertEquals(new java.sql.Date(1738771200000L), result);
     }
 
     // ==================== 日期间隔计算 ====================

@@ -21,7 +21,7 @@ public class Floor extends NumberConvert implements Function<Object, Number> {
         }
 
         BigDecimal number = this.convert(evaluator, args.get(0));
-        return number.setScale(0, RoundingMode.DOWN);
+        return number.setScale(0, RoundingMode.FLOOR);
     }
 
     @Override

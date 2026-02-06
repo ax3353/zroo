@@ -35,7 +35,7 @@ public class Divide extends NumberConvert implements Function<Object, Number> {
             }
 
             // 设置精度
-            result = result.divide(divisor, 5, RoundingMode.HALF_EVEN);
+            result = result.divide(divisor, 8, RoundingMode.HALF_EVEN);
             if (result.stripTrailingZeros().scale() > 0) {
                 isInteger = false;
             }

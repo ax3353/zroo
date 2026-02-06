@@ -21,7 +21,7 @@ public class Ceil extends NumberConvert implements Function<Object, Number> {
         }
 
         BigDecimal number = this.convert(evaluator, args.get(0));
-        return number.setScale(0, RoundingMode.UP);
+        return number.setScale(0, RoundingMode.CEILING);
     }
 
     @Override
