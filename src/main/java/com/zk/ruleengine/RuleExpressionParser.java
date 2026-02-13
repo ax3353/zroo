@@ -1,4 +1,4 @@
-package com.zk.ruleengine.utils;
+package com.zk.ruleengine;
 
 import java.util.*;
 import java.util.regex.Pattern;
