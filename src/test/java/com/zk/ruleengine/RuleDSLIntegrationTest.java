@@ -224,6 +224,7 @@ public class RuleDSLIntegrationTest {
         List<String> tokens = RuleTokenizer.tokenize(dsl);
         Object expression = RuleExpressionParser.parse(tokens);
         String ruleExpression = JSON.toJSONString(expression);
+        System.out.println("Expression: " + ruleExpression);
 
         // 测试金卡
         Map<String, Object> goldContext = new HashMap<>();
@@ -265,6 +266,7 @@ public class RuleDSLIntegrationTest {
         List<String> tokens = RuleTokenizer.tokenize(dsl);
         Object expression = RuleExpressionParser.parse(tokens);
         String ruleExpression = JSON.toJSONString(expression);
+        System.out.println("Expression: " + ruleExpression);
 
         // VIP大额
         Map<String, Object> vipContext = new HashMap<>();
@@ -329,11 +331,15 @@ public class RuleDSLIntegrationTest {
                         "(@transCount24h > 50) || " +
                         "(strNeq(@city, @lastCity) && (@historyDays < 30))";
 
+//        String dsl = "strNeq(@city, @lastCity) && (@historyDays < 30)";
+
         System.out.println("DSL: " + dsl);
 
         List<String> tokens = RuleTokenizer.tokenize(dsl);
+        System.out.println("tokens: " + tokens);
         Object expression = RuleExpressionParser.parse(tokens);
         String ruleExpression = JSON.toJSONString(expression);
+        System.out.println("Expression: " + ruleExpression);
 
         // 高风险: 异地登录 + 新用户
         Map<String, Object> highRiskContext = new HashMap<>();
@@ -421,6 +427,7 @@ public class RuleDSLIntegrationTest {
         List<String> tokens = RuleTokenizer.tokenize(dsl);
         Object expression = RuleExpressionParser.parse(tokens);
         String ruleExpression = JSON.toJSONString(expression);
+        System.out.println("Expression: " + ruleExpression);
 
         Map<String, Object> context = new HashMap<>();
         context.put("price", 100);
@@ -557,6 +564,7 @@ public class RuleDSLIntegrationTest {
         List<String> tokens = RuleTokenizer.tokenize(dsl);
         Object expression = RuleExpressionParser.parse(tokens);
         String ruleExpression = JSON.toJSONString(expression);
+        System.out.println("Expression: " + ruleExpression);
 
         Map<String, Object> context = new HashMap<>();
         context.put("text", "Hello\nWorld");

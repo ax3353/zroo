@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSON;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExpressionParserTest {
+public class ParserTest {
 
     public static void main(String[] args) {
-        ExpressionParserTest testMain = new ExpressionParserTest();
+        ParserTest testMain = new ParserTest();
 //        testMain.test0();
 //        testMain.test1();
 //        testMain.test2();

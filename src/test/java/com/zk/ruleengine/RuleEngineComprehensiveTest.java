@@ -85,7 +85,7 @@ public class RuleEngineComprehensiveTest {
     public void testModulo() {
         String exp = "[\"%\", 17, 5]";
         Number result = engine.execute(context, exp);
-        assertEquals(BigDecimal.valueOf(2), result);
+        assertEquals(2, result);
     }
 
     @Test

@@ -31,12 +31,12 @@ public class RuleTokenizer {
             "date+", "date-",
             // 双字符操作符
             "==", ">=", "<=", "<>", "&&", "||",
-            "date<", "date>", "date==", "date>=", "date<=", "date<>",
-            // 单字符操作符
             "+", "-", "*", "/", "%", ">", "<",
+            "date<", "date>", "date==", "date>=", "date<=", "date<>",
             // 括号和分隔符
             "(", ")", ","
     };
+
 
     // 关键字
     private static final String[] KEYWORDS = {
@@ -44,6 +44,7 @@ public class RuleTokenizer {
             // 一元操作符
             "abs", "ceil", "floor", "toStr", "toNumber", "toDate",
             "blank", "notBlank", "null", "notNull", "scale",
+            "timeInput", "dateInput", "dateTimeInput", "strInput", "numberInput",
             // 二元操作符
             "strEq", "strNeq", "contains", "notContains",
             "leftSub", "rightSub", "midSub",

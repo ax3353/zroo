@@ -36,6 +36,8 @@ public class ExpressionTest {
         context.put("namex", 1);
         context.put("age", 1);
         context.put("em", 67);
+        context.put("memberLevel", "gold");
+        context.put("price", 100);
 
         String exp0 = "[\"blank\",[\"@value\",\"name\"]]";
         System.out.println(exp0);
@@ -136,5 +138,11 @@ public class ExpressionTest {
         System.out.println(exp13);
         Object eval13 = engine.execute(context, exp13);
         System.out.println(eval13);
+        System.out.println("------------------------------14");
+
+        String exp14 = "[\"*\",[\"@value\",\"price\"],[\"numberInput\",0.8]]";
+        System.out.println(exp14);
+        Object eval14 = engine.execute(context, exp14);
+        System.out.println(eval14);
     }
 }

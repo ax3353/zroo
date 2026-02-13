@@ -78,6 +78,11 @@ public class RuleExpressionParser {
         int openParenCount = 0;
 
         for (String token : tokens) {
+
+            if (token.equals(",")) {
+                continue;
+            }
+
             if (token.equals("(")) {
                 operatorStack.push("(");
                 openParenCount++;

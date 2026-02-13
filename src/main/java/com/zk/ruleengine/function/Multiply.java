@@ -57,13 +57,13 @@ public class Multiply extends NumberConvert implements Function<Object, Number> 
                     }
                 } catch (ArithmeticException e) {
                     // 如果 longValueExact 失败，返回 BigDecimal
-                    return result;
+                    return new BigDecimal(result.toPlainString());
                 }
             }
         }
 
-        // 返回 BigDecimal（有小数部分）
-        return result.stripTrailingZeros();
+        // 返回普通十进制格式（避免科学计数法）
+        return new BigDecimal(result.stripTrailingZeros().toPlainString());
     }
 
     @Override
