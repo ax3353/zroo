@@ -326,12 +326,9 @@ public class RuleDSLIntegrationTest {
     public void testRiskControlDSL() {
         System.out.println("测试: 风控规则DSL");
 
-        String dsl =
-                "(@amount > (@avgAmount * 10)) || " +
+        String dsl = "(@amount > (@avgAmount * 10)) || " +
                         "(@transCount24h > 50) || " +
-                        "(strNeq(@city, @lastCity) && (@historyDays < 30))";
-
-//        String dsl = "strNeq(@city, @lastCity) && (@historyDays < 30)";
+                "((strNeq(@city, @lastCity)) && (@historyDays < 30))";
 
         System.out.println("DSL: " + dsl);
 
